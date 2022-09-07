@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const coordenates = createSlice({
   name: "coordenates",
   initialState: {
-    origin: { lat: 30.194528, lng: -97.669889 },
-    destination: { lat: 35.877639, lng: -78.787472 },
+    origin: { lat: 33.636719, lng: -84.428067 },
+    destination: { lat: 51.4775, lng: -0.461389 },
   },
 
   reducers: {

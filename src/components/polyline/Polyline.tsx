@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Polyline, DirectionsRenderer } from "@react-google-maps/api";
-import { MAP_SETTINGS } from "./configurations";
 
 function PolylineDistance(props: any) {
   const { directions } = props;

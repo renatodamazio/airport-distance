@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from "react";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
 import DistanceService from "../distance/DistanceService";
@@ -8,7 +9,7 @@ import PolylineDistance from "../polyline/Polyline";
 import { useSelector } from "react-redux";
 
 const containerStyle = {
-  width: "400px",
+  width: "800px",
   height: "400px",
 };
 
@@ -19,9 +20,14 @@ const center = {
 
 function Map() {
   const [mapKey, setMapKey] = useState<number>(0);
+  const [map, setMap] = useState<any>("");
+  const [makers, setMakers] = useState<any>("");
+
   const { origin, destination } = useSelector(
     (state: any) => state.coordenates
   );
+
+  const places = [origin, destination];
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -29,17 +35,29 @@ function Map() {
     libraries: ["geometry", "drawing"],
   });
 
-  const places = [origin, destination];
+  const onLoad = useCallback(
+    function callback(map: any) {
+      const bounds = new window.google.maps.LatLngBounds();
+      let mkr: any = "";
 
-  const onLoad = useCallback(function callback(map: any) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-  }, []);
+      for (var i = 0; i < places.length; i++) {
+        mkr = new google.maps.Marker({
+          position: new google.maps.LatLng(places[i], places[i]),
+          map: map,
+        });
 
-  const onUnmount = useCallback(function callback(_map: any) {}, []);
+        bounds.extend(mkr.position);
+      }
+
+      map.fitBounds(bounds);
+      setMap(map);
+    },
+    [origin, destination]
+  );
 
   useEffect(() => {
     setMapKey((prev) => (prev += 1));
+    setMakers(places);
   }, [origin, destination]);
 
   return isLoaded ? (
@@ -49,19 +67,15 @@ function Map() {
       center={center}
       zoom={1}
       onLoad={onLoad}
-      onUnmount={onUnmount}
     >
       <>
-        {places.map((marker: any, index: number) => {
+        {makers.map((marker: any, index: number) => {
           const position = { lat: marker.lat, lng: marker.lng };
-          return (
-            position.lat &&
-            position.lng && <Marker position={position} key={index} />
-          );
+          return <MarkerF position={position} key={index} />;
         })}
 
         <PolylineDistance directions={places} />
-
+        
         <DirectionRender
           places={places}
           travelMode={google.maps.TravelMode.DRIVING}

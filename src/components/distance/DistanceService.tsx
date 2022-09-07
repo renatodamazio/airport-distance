@@ -47,7 +47,7 @@ function DirectionService(props: any) {
   }, [directions]);
 
   useEffect(() => {
-    console.log(results);
+    // console.log(results);
   }, [results]);
 
   return (
