@@ -1,9 +1,5 @@
-import React, { useState, useCallback } from "react";
-import {
-  GoogleMap,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+import React, { useState, useCallback, useEffect } from "react";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
 import PolylineDistance from "../polyline/Polyline";
@@ -19,22 +15,24 @@ const center = {
 };
 
 function Map() {
+  const [map, setMap] = useState(null);
+  const [results, setResults] = useState<any>(null);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCjkCjzb4MdOpgMh8DSBXg3hfhnzH6cGJo",
     libraries: ["geometry", "drawing"],
   });
 
-  const [map, setMap] = useState(null);
   const places = [
-    { latitude: 25.8103146, longitude: -80.1751609 },
-    { latitude: 27.9947147, longitude: -82.5943645 },
-    { latitude: 28.4813018, longitude: -81.4387899 },
+    { latitude: 30.194528, longitude: -97.669889 },
+    { latitude: 35.877639, longitude: -78.787472 },
   ];
 
   const onLoad = useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
+    directionsCalculation();
     setMap(map);
   }, []);
 
@@ -42,33 +40,25 @@ function Map() {
     setMap(null);
   }, []);
 
+  const directionsCalculation = () => {
+    const DirectionsService = new window.google.maps.DirectionsService();
 
-  const path = [
-    {lat: 37.772, lng: -122.214},
-    {lat: 21.291, lng: -157.821},
-    {lat: -18.142, lng: 178.431},
-    {lat: -27.467, lng: 153.027}
-  ];
+    DirectionsService.route({
+      origin: new google.maps.LatLng(30.194528,  -97.669889),
+      destination: new google.maps.LatLng(35.877639, -78.787472),
+      travelMode: google.maps.TravelMode.DRIVING,
+    }, (result, status) => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        setResults(result?.routes[0].legs[0]);
+      } else {
+        console.error(`error fetching directions ${result}`);
+      }
+    });
+  }
 
-  const options = {
-    strokeColor: '#FF0000',
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: '#FF0000',
-    fillOpacity: 0.35,
-    clickable: false,
-    draggable: false,
-    editable: false,
-    visible: true,
-    radius: 30000,
-    paths: [
-      {lat: 37.772, lng: -122.214},
-      {lat: 21.291, lng: -157.821},
-      {lat: -18.142, lng: 178.431},
-      {lat: -27.467, lng: 153.027}
-    ],
-    zIndex: 1
-  };
+  useEffect(() => {
+    console.log(results);
+  }, [results])
 
   return isLoaded ? (
     <GoogleMap
@@ -84,7 +74,7 @@ function Map() {
           return <Marker position={position} key={index} />;
         })}
 
-        <PolylineDistance directions={places}/>
+        <PolylineDistance directions={places} />
 
         <DirectionRender
           places={places}

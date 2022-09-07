@@ -13,7 +13,6 @@ function App() {
     const nautical = calcNauticalMiles(a, b, c, d);
     const kilometer = calcKilometers(a, b, c, d);
 
-    console.log(nautical, "\n", kilometer);
   }, []);
   return <div className="App">
     <Map/>
