@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
@@ -16,8 +16,6 @@ const center = {
 };
 
 function Map() {
-  const [map, setMap] = useState(null);
-
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCjkCjzb4MdOpgMh8DSBXg3hfhnzH6cGJo",
@@ -32,11 +30,11 @@ function Map() {
   const onLoad = useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
-    setMap(map);
+    // setMap(map);
   }, []);
 
   const onUnmount = useCallback(function callback(_map: any) {
-    setMap(null);
+    // setMap(null);
   }, []);
 
   return isLoaded ? (
