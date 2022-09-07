@@ -16,8 +16,6 @@ function App() {
     console.log(nautical, "\n", kilometer);
   }, []);
   return <div className="App">
-      learn react
-    
     <Map/>
     </div>;
 }
