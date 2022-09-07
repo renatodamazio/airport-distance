@@ -32,33 +32,12 @@ function Map() {
   const onLoad = useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
-    directionsCalculation();
     setMap(map);
   }, []);
 
   const onUnmount = useCallback(function callback(_map: any) {
     setMap(null);
   }, []);
-
-  const directionsCalculation = () => {
-    const DirectionsService = new window.google.maps.DirectionsService();
-
-    DirectionsService.route({
-      origin: new google.maps.LatLng(30.194528,  -97.669889),
-      destination: new google.maps.LatLng(35.877639, -78.787472),
-      travelMode: google.maps.TravelMode.DRIVING,
-    }, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-        setResults(result?.routes[0].legs[0]);
-      } else {
-        console.error(`error fetching directions ${result}`);
-      }
-    });
-  }
-
-  useEffect(() => {
-    console.log(results);
-  }, [results])
 
   return isLoaded ? (
     <GoogleMap
@@ -75,13 +54,11 @@ function Map() {
         })}
 
         <PolylineDistance directions={places} />
-
+        
         <DirectionRender
           places={places}
           travelMode={google.maps.TravelMode.DRIVING}
         />
-
-        <Marker position={{ lat: 36.8236, lng: 7.8103 }} />
       </>
     </GoogleMap>
   ) : (
