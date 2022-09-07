@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
+import PolylineDistance from "../polyline/Polyline";
 
 const containerStyle = {
   width: "400px",
@@ -37,6 +42,34 @@ function Map() {
     setMap(null);
   }, []);
 
+
+  const path = [
+    {lat: 37.772, lng: -122.214},
+    {lat: 21.291, lng: -157.821},
+    {lat: -18.142, lng: 178.431},
+    {lat: -27.467, lng: 153.027}
+  ];
+
+  const options = {
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    clickable: false,
+    draggable: false,
+    editable: false,
+    visible: true,
+    radius: 30000,
+    paths: [
+      {lat: 37.772, lng: -122.214},
+      {lat: 21.291, lng: -157.821},
+      {lat: -18.142, lng: 178.431},
+      {lat: -27.467, lng: 153.027}
+    ],
+    zIndex: 1
+  };
+
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -50,10 +83,14 @@ function Map() {
           const position = { lat: marker.latitude, lng: marker.longitude };
           return <Marker position={position} key={index} />;
         })}
+
+        <PolylineDistance directions={places}/>
+
         <DirectionRender
           places={places}
           travelMode={google.maps.TravelMode.DRIVING}
         />
+
         <Marker position={{ lat: 36.8236, lng: 7.8103 }} />
       </>
     </GoogleMap>
