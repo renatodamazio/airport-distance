@@ -76,12 +76,12 @@ function Map() {
 
         <PolylineDistance directions={places} />
         
-        <DirectionRender
+        {/* <DirectionRender
           places={places}
           travelMode={google.maps.TravelMode.DRIVING}
         />
 
-        <DistanceService />
+        <DistanceService /> */}
       </>
     </GoogleMap>
   ) : (

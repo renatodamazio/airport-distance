@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import airports from "../../lib/airports.json";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +7,9 @@ import ResultsList from "./ResultsList";
 
 function Search() {
   const dispatch = useDispatch();
+
+  const originField = useRef<null | HTMLInputElement>(null);
+  const destinationField = useRef<null | HTMLInputElement>(null);
 
   const [options, setOptions] = useState<any>([]);
 
@@ -37,6 +40,11 @@ function Search() {
   const defineOriginLatLgn = (data: any) => {
     const coordenates = getCoordenates(data);
     dispatch(setOrigin(coordenates));
+
+    const field = originField?.current;
+    if (field) {
+      field.value = data.name;
+    }
     setOptions([]);
   };
 
@@ -44,9 +52,12 @@ function Search() {
     <div>
       <input
         type="text"
-        defaultValue={"Hartsfield Jackson Atlanta Intl"}
+        placeholder="Airport origin"
+        ref={originField}
         onInput={(e: any) => searchAirPorts(e?.target?.value)}
       />
+      
+      <button>Search</button>
       <ResultsList onClick={defineOriginLatLgn} options={options} />
     </div>
   );
