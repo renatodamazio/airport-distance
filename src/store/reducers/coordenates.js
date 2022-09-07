@@ -3,18 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 export const coordenates = createSlice({
   name: "coordenates",
   initialState: {
-    origin: {},
-    destination: {},
+    origin: { lat: 30.194528, lng: -97.669889 },
+    destination: { lat: 35.877639, lng: -78.787472 },
   },
 
   reducers: {
     setOrigin(state, action) {
-      const paypload = action.payload || {};
-      state.origin = { ...paypload?.origin };
-      state.destination = { ...paypload?.destination };
+      state.origin = { ...action.payload };
+    },
+    setDesination(state, action) {
+      state.destination = { ...action.payload };
     },
   },
 });
 
-export const { setOrigin } = coordenates.actions;
+export const { setOrigin, setDesination } = coordenates.actions;
 export default coordenates.reducer;

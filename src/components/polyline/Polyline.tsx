@@ -7,12 +7,26 @@ function PolylineDistance(props: any) {
 
   const [path, setPath] = useState<any>([]);
 
+  const options = {
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    clickable: false,
+    draggable: false,
+    editable: false,
+    visible: true,
+    radius: 30000,
+    zIndex: 1
+  };
+
   useEffect(() => {
     const arr: any = [];
     directions.forEach((dir: any) => {
       arr.push({
-        lat: dir.latitude,
-        lng: dir.longitude,
+        lat: dir.lat,
+        lng: dir.lng,
       });
     });
 
@@ -22,7 +36,7 @@ function PolylineDistance(props: any) {
   return (
     path.length && (
       <>
-        <Polyline path={path} />
+        <Polyline path={path} options={options}/>
         <DirectionsRenderer directions={path} />
       </>
     )

@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
 import DistanceService from "../distance/DistanceService";
 import PolylineDistance from "../polyline/Polyline";
+
+import { useSelector } from "react-redux";
 
 const containerStyle = {
   width: "400px",
@@ -16,25 +18,24 @@ const center = {
 };
 
 function Map() {
+  const { origin, destination } = useSelector(
+    (state: any) => state.coordenates
+  );
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCjkCjzb4MdOpgMh8DSBXg3hfhnzH6cGJo",
     libraries: ["geometry", "drawing"],
   });
 
-  const places = [
-    { latitude: 30.194528, longitude: -97.669889 },
-    { latitude: 35.877639, longitude: -78.787472 },
-  ];
+  const places = [origin, destination];
 
   const onLoad = useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
-    // setMap(map);
   }, []);
 
   const onUnmount = useCallback(function callback(_map: any) {
-    // setMap(null);
   }, []);
 
   return isLoaded ? (
@@ -47,12 +48,12 @@ function Map() {
     >
       <>
         {places.map((marker: any, index: number) => {
-          const position = { lat: marker.latitude, lng: marker.longitude };
-          return <Marker position={position} key={index} />;
+          const position = { lat: marker.lat, lng: marker.lng };
+          return position.lat && position.lng && <Marker position={position} key={index} />;
         })}
 
         <PolylineDistance directions={places} />
-        
+
         <DirectionRender
           places={places}
           travelMode={google.maps.TravelMode.DRIVING}

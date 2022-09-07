@@ -11,10 +11,12 @@ function DirectionRender(props: any) {
   });
 
   const initDirections = () => {
+    console.log(places)
     const waypoints = places.map((p: any) => ({
-      location: { lat: p.latitude, lng: p.longitude },
+      location: { lat: p.lat, lng: p.lng },
       stopover: true,
     }));
+
     const origin = waypoints.shift().location;
     const destination = waypoints.pop().location;
 
