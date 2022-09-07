@@ -17,7 +17,6 @@ const center = {
 
 function Map() {
   const [map, setMap] = useState(null);
-  const [results, setResults] = useState<any>(null);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
