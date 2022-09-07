@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
+import DistanceService from "../distance/DistanceService";
 import PolylineDistance from "../polyline/Polyline";
 
 const containerStyle = {
@@ -59,6 +60,8 @@ function Map() {
           places={places}
           travelMode={google.maps.TravelMode.DRIVING}
         />
+
+        <DistanceService />
       </>
     </GoogleMap>
   ) : (

@@ -40,9 +40,7 @@ function DirectionRender(props: any) {
   };
 
   useEffect(() => {
-    if (window.google.maps) {
-      initDirections();
-    }
+    initDirections();
   }, []);
 
   return (

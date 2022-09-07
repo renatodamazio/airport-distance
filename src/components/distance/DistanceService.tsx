@@ -1,11 +1,30 @@
 import { useEffect, useState } from "react";
+import { calcNauticalMiles } from "../../utils/distance";
 
 function DirectionService(props: any) {
   const { directions } = props;
 
   const [results, setResults] = useState<any>(null);
+  const [nauticalMiles, setNauticalMiles] = useState<number>(0);
+
   const directionsCalculation = () => {
     const DirectionsService = new window.google.maps.DirectionsService();
+
+    const getNauticalMiles = calcNauticalMiles(
+      30.194528,
+      -97.669889,
+      35.877639,
+      -78.787472
+    );
+
+    setNauticalMiles(getNauticalMiles);
+
+    // const getNauticalMiles = calcNauticalMiles(
+    //     origin.lat,
+    //     origin.lng,
+    //     destination.lat,
+    //     destination.lng
+    //   );
 
     DirectionsService.route(
       {
@@ -24,20 +43,23 @@ function DirectionService(props: any) {
   };
 
   useEffect(() => {
-    if(window.google) directionsCalculation();
+    directionsCalculation();
   }, [directions]);
 
   useEffect(() => {
     console.log(results);
   }, [results]);
 
-  return <div>
-    distance: {results?.distance?.text}
-    <br/>
-    duration: {results?.duration?.text}
-    <br/>
-
-  </div>;
+  return (
+    <div>
+      Nautical Distance: {nauticalMiles?.toFixed(3)}
+      <br />
+      distance: {results?.distance?.text}
+      <br />
+      duration: {results?.duration?.text}
+      <br />
+    </div>
+  );
 }
 
 export default DirectionService;

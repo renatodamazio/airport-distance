@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { calcNauticalMiles, calcKilometers } from "./utils/distance";
 import Map from "./components/map";
-import DirectionService from "./components/directions/DirectionService";
 
 function App() {
   const a = -6.081689834590001;
@@ -17,8 +16,6 @@ function App() {
   }, []);
   return <div className="App">
     <Map/>
-    <DirectionService />
-
     </div>;
 }
 
