@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const maps = createSlice({
+    name: "maps",
   initialState: {
     loaded: false,
     config: {

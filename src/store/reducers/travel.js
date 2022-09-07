@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const travels = createSlice({
+  name: "travels",
   initialState: {
     travelMode: "",
     travelModeOptions: [
