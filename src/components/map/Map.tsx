@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
@@ -18,6 +18,7 @@ const center = {
 };
 
 function Map() {
+  const [mapKey, setMapKey] = useState<number>(0);
   const { origin, destination } = useSelector(
     (state: any) => state.coordenates
   );
@@ -35,11 +36,15 @@ function Map() {
     map.fitBounds(bounds);
   }, []);
 
-  const onUnmount = useCallback(function callback(_map: any) {
-  }, []);
+  const onUnmount = useCallback(function callback(_map: any) {}, []);
+
+  useEffect(() => {
+    setMapKey((prev) => (prev += 1));
+  }, [origin, destination]);
 
   return isLoaded ? (
     <GoogleMap
+      key={mapKey}
       mapContainerStyle={containerStyle}
       center={center}
       zoom={1}
@@ -49,7 +54,10 @@ function Map() {
       <>
         {places.map((marker: any, index: number) => {
           const position = { lat: marker.lat, lng: marker.lng };
-          return position.lat && position.lng && <Marker position={position} key={index} />;
+          return (
+            position.lat &&
+            position.lng && <Marker position={position} key={index} />
+          );
         })}
 
         <PolylineDistance directions={places} />
