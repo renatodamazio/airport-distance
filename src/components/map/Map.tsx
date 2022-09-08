@@ -161,11 +161,11 @@ function Map() {
         })}
 
         <PolylineDistance directions={places} />
-        {/*         
+                
           <DirectionRender
             places={places}
             travelMode={google.maps.TravelMode.DRIVING}
-          /> */}
+          />
 
         <CalcDirections />
       </>
