@@ -93,9 +93,6 @@ function Search() {
     return Object.keys(direction);
   };
 
-  /**
-   * Active when click at button.
-   */
   const showResults = () => {
     const { origin, destination } = directions;
 
@@ -113,7 +110,7 @@ function Search() {
 
   useEffect(() => {
     showResults()
-  }, [directions])
+  }, [directions]);
 
   return (
     <Grid container spacing={1}>

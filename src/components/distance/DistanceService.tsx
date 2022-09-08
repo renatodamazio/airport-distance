@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 function DirectionService() {
-  const { nautical, distance, duration, kilometers } = useSelector(
+  const { nautical, distance, duration, kilometers, transport } = useSelector(
     (state: any) => state.distances
   );
   return (
@@ -74,7 +74,7 @@ function DirectionService() {
           <MdTimer />
         </ListItemIcon>
         <ListItemText>
-          Driving <strong>{duration}</strong>
+          {transport} <strong>{duration}</strong>
         </ListItemText>
       </ListItem>
     </List>

@@ -13,7 +13,7 @@ function Steps() {
       <Stepper orientation="vertical">
         {directions.map((direction: any, index: number) => {
           return (
-            <Step>
+            <Step active={true}>
               <StepLabel><p dangerouslySetInnerHTML={{__html: direction.instructions}}></p></StepLabel>
             </Step>
           );

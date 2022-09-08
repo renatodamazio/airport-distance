@@ -1,7 +1,14 @@
 import Map from "./components/map";
 import Search from "./components/seach/Search";
 import DistanceService from "./components/distance/DistanceService";
-import { Box, Grid, Divider, Card, CardContent } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Divider,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
 
@@ -21,17 +28,15 @@ const aside: FlexDirection = {
   display: "flex",
   height: "100%",
   width: "40%",
+  maxWidth: "400px",
   flexDirection: "column",
-  outline: "2px solid #000",
-  paddingTop: 16
 };
 
 const main = {
   width: "100%",
   height: "100%",
   display: "flex",
-  border: "2px solid #000",
-  overflow: "hidden"
+  overflow: "hidden",
 };
 
 const section = {
@@ -43,9 +48,8 @@ const section = {
 const paths = {
   width: "100%",
   height: "100%",
-  border: "2px solid #fff",
   overflow: "auto",
-  padding: 10
+  padding: 10,
 };
 
 function App() {
@@ -53,18 +57,31 @@ function App() {
     <div style={main}>
       <div style={aside}>
         <div style={{ width: "100%" }}>
+          <Card>
+            <CardContent>
+              <div>
+                <Transport />
+              </div>
+              <div>
+                <Search />
+              </div>
+            </CardContent>
+          </Card>
           <div>
-            <Transport />
-          </div>
-          <div>
-            <Search />
-          </div>
-
-          <div>
-            <DistanceService />
+            <Card style={{borderRadius: 0}}>
+              <CardContent>
+                <Divider>
+                  <Typography variant="h6">Distance</Typography>
+                </Divider>
+                <DistanceService />
+              </CardContent>
+            </Card>
           </div>
         </div>
         <div style={paths}>
+          <Divider>
+            <Typography variant="h6">Directions</Typography>
+          </Divider>
           <Steps />
         </div>
       </div>
