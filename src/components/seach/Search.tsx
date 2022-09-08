@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, batch } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -103,14 +103,18 @@ function Search() {
     const isOriginValid = checkEmptyDirections(origin).length;
     const isDestinationValid = checkEmptyDirections(destination).length;
 
-    if (!isOriginValid) return toast("Origin not provided.");
-    if (!isDestinationValid) return toast("Destination not provided.");
+    if (!isOriginValid) return;
+    if (!isDestinationValid) return;
 
     batch(() => {
       dispatch(setOrigin(origin));
       dispatch(setDestination(destination));
     });
   };
+
+  useEffect(() => {
+    showResults()
+  }, [directions])
 
   return (
     <Grid container spacing={2}>
@@ -141,16 +145,6 @@ function Search() {
             </ListItemText>
           </ListItem>
         </List>
-      </Grid>
-
-      <Grid item xs={12}>
-        <Button
-          size="large"
-          onClick={showResults}
-          fullWidth={true}
-        >
-          SHow results
-        </Button>
       </Grid>
     </Grid>
   );

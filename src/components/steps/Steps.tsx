@@ -3,9 +3,6 @@ import {
   Stepper,
   Step,
   StepLabel,
-  StepContent,
-  Button,
-  Paper,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
