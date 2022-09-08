@@ -7,21 +7,26 @@ export const distances = createSlice({
     duration: "",
     steps: {},
     nautical: 0,
+    kilometers: 0,
     start_address: "",
     end_address: "",
   },
 
   reducers: {
     setDistance(state, action) {
-      state.distance = { ...action.payload };
+      state.distance = action.payload;
+    },
+
+    setKilometers(state, action) {
+      state.kilometers = action.payload;
     },
 
     setDuration(state, action) {
-      state.duration = { ...action.payload };
+      state.duration = action.payload;
     },
 
     setSteps(state, action) {
-      state.steps = { ...action.payload };
+      state.steps = action.payload;
     },
 
     setNautical(state, action) {
@@ -40,6 +45,7 @@ export const distances = createSlice({
 
 export const {
   setDistance,
+  setKilometers,
   setDuration,
   setSteps,
   setNautical,

@@ -2,24 +2,16 @@ import React, { useEffect } from "react";
 import { calcNauticalMiles, calcKilometers } from "./utils/distance";
 import Map from "./components/map";
 import Search from "./components/seach/Search";
-
+import DistanceService from "./components/distance/DistanceService";
 
 function App() {
-  const a = -6.081689834590001;
-  const b = 145.391998291;
-
-  const c = 61.53630065917969;
-  const d = -160.34100341796875;
-
-  useEffect(() => {
-    const nautical = calcNauticalMiles(a, b, c, d);
-    const kilometer = calcKilometers(a, b, c, d);
-
-  }, []);
-  return <div className="App">
-    <Search />
-    <Map/>
-    </div>;
+  return (
+    <div className="App">
+      <Search />
+      <Map />
+      <DistanceService />
+    </div>
+  );
 }
 
 export default App;

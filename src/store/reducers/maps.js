@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const maps = createSlice({
-    name: "maps",
+  name: "maps",
   initialState: {
-    loaded: false,
+    mapLoad: false,
     config: {
       id: "google-map-script",
       apiKey: "AIzaSyCjkCjzb4MdOpgMh8DSBXg3hfhnzH6cGJo",
@@ -26,8 +26,12 @@ export const maps = createSlice({
         ...action.payload,
       };
     },
+
+    setMapLoad(state, action) {
+      state.mapLoad = action.payload;
+    },
   },
 });
 
-export const { setConfig } = maps.actions;
+export const { setConfig, setMapLoad } = maps.actions;
 export default maps.reducer;

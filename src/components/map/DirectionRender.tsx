@@ -11,7 +11,6 @@ function DirectionRender(props: any) {
   });
 
   const initDirections = () => {
-    console.log(places)
     const waypoints = places.map((p: any) => ({
       location: { lat: p.lat, lng: p.lng },
       stopover: true,
