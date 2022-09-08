@@ -32,7 +32,8 @@ const center = {
 function Map() {
   const [mapKey, setMapKey] = useState<number>(0);
   const [map, setMap] = useState<any>("");
-  const [makers, setMakers] = useState<any>("");
+  const [ready, setReady] = useState<boolean>(false);
+  const [makers, setMakers] = useState<any>([]);
 
   const dispatch = useDispatch();
 
@@ -92,6 +93,10 @@ function Map() {
     return <></>
   };
 
+  const clearMakers = (map:any) => {
+    
+  }
+
   const onLoad = useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds();
     let mkr: any = "";
@@ -109,7 +114,7 @@ function Map() {
     setMap(map);
 
     dispatch(setMapLoad(true));
-  }, []);
+  }, [origin, destination]);
 
   const onUnmount = useCallback(function callback() {
     dispatch(setMapLoad(false));
@@ -120,8 +125,20 @@ function Map() {
   }, [mapKey]);
 
   useEffect(() => {
-    setMapKey((prev) => (prev += 1));
+    setReady(false);
+
+    // function setMapOnAll(map: google.maps.Map | null) {
+    //   for (let i = 0; i < places.length; i++) {
+    //     places[i].setMap(map);
+    //   }
+    // }
+
+    // setMapOnAll(null);
+    setReady(true);
+
     setMakers(places);
+
+    setMapKey((prev) => (prev += 1));
   }, [origin, destination]);
 
   return isLoaded ? (
@@ -130,7 +147,7 @@ function Map() {
       mapContainerStyle={containerStyle}
       center={center}
       zoom={1}
-      onLoad={onLoad}
+      onLoad={onLoad} 
       onUnmount={onUnmount}
     >
       <>
@@ -140,11 +157,11 @@ function Map() {
         })}
 
         <PolylineDistance directions={places} />
-
-        <DirectionRender
-          places={places}
-          travelMode={google.maps.TravelMode.DRIVING}
-        />
+{/*         
+          <DirectionRender
+            places={places}
+            travelMode={google.maps.TravelMode.DRIVING}
+          /> */}
 
         <CalcDirections />
       </>
