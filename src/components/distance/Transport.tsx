@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 
-import { Button, ButtonGroup } from "@mui/material";
+import { IconButton, ButtonGroup } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import { setTransport } from "../../store/reducers/distances";
+import blue from '@material-ui/core/colors/blue';
+
+
+import {
+  MdDirectionsCar,
+  MdOutlineDirectionsBike,
+  MdDirectionsBus,
+  MdDirectionsWalk,
+} from "react-icons/md";
 
 interface transportReference {
   title: string;
@@ -21,22 +30,22 @@ function Transport() {
   const [transports, setTransports] = useState<transportReference[]>([
     {
       title: "Driving",
-      icon: "driving",
+      icon: <MdDirectionsCar />,
       code: "DRIVING",
     },
     {
       title: "Bicycling",
-      icon: "bike",
+      icon: <MdOutlineDirectionsBike />,
       code: "BICYCLING",
     },
     {
       title: "Transit",
-      icon: "transit",
+      icon: <MdDirectionsBus />,
       code: "TRANSIT",
     },
     {
       title: "WALKING",
-      icon: "walking",
+      icon: <MdDirectionsWalk />,
       code: "WALKING",
     },
   ]);
@@ -59,15 +68,16 @@ function Transport() {
     >
       {transports.map((transport: any, key: number) => {
         return (
-          <Button
-            variant={
-              activeTransport === transport.code ? "contained" : "outlined"
-            }
+          <IconButton
+            style={{
+              background:
+                activeTransport === transport.code ? `${blue[100]}` : "",
+            }}
             onClick={() => defineTravelTransport(transport)}
             key={key}
           >
-            {transport.title}
-          </Button>
+            {transport.icon}
+          </IconButton>
         );
       })}
     </ButtonGroup>

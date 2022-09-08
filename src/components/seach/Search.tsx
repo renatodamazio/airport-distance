@@ -58,7 +58,6 @@ function Search() {
 
   const getLatLgnFromOptionList = (data: any, direction: string) => {
     const coordenates = getCoordenates(data);
-    console.log(data);
 
     if (direction === "destination") {
       dispatch(setEndAddress(data));
@@ -117,7 +116,7 @@ function Search() {
   }, [directions])
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1}>
       <ToastContainer />
 
       <Grid item xs={12}>
