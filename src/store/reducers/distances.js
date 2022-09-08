@@ -5,7 +5,7 @@ export const distances = createSlice({
   initialState: {
     distance: "",
     duration: "",
-    steps: {},
+    steps: [],
     nautical: 0,
     kilometers: 0,
     transport: "BYCICLING",

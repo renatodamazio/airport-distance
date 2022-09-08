@@ -38,7 +38,7 @@ function Search() {
     destination: {},
   });
 
-  const [originOptions, setOriginOptions] = useState<optionsReferecenPoints>({
+  const [_, setOriginOptions] = useState<optionsReferecenPoints>({
     airportList: [],
     name: "",
     iataCode: "",
@@ -146,7 +146,6 @@ function Search() {
       <Grid item xs={12}>
         <Button
           size="large"
-          variant="contained"
           onClick={showResults}
           fullWidth={true}
         >
