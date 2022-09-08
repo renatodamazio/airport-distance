@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import { setEndAddress, setStartAddress } from "../../store/reducers/distances";
 
-import TripOriginIcon from "@mui/icons-material/TripOrigin";
-import RoomIcon from "@mui/icons-material/Room";
+import { HiLocationMarker } from "react-icons/hi";
+import { MdTripOrigin} from "react-icons/md";
 
 interface optionsReferecenPoints {
   airportList?: any;
@@ -119,9 +119,7 @@ function Search() {
       <Grid item xs={12}>
         <List>
           <ListItem>
-            <ListItemIcon>
-              <TripOriginIcon fontSize="small" />
-            </ListItemIcon>
+            <ListItemIcon><MdTripOrigin/></ListItemIcon>
 
             <ListItemText>
               <AutocompleteField
@@ -133,9 +131,7 @@ function Search() {
           </ListItem>
 
           <ListItem>
-            <ListItemIcon>
-              <RoomIcon fontSize="small" color="secondary" />
-            </ListItemIcon>
+            <ListItemIcon><HiLocationMarker /></ListItemIcon>
             <ListItemText>
               <AutocompleteField
                 getLatLgnFromOptionList={getLatLgnFromOptionList}
@@ -148,7 +144,12 @@ function Search() {
       </Grid>
 
       <Grid item xs={12}>
-        <Button size="large" variant="contained" onClick={showResults} fullWidth={true}>
+        <Button
+          size="large"
+          variant="contained"
+          onClick={showResults}
+          fullWidth={true}
+        >
           SHow results
         </Button>
       </Grid>
