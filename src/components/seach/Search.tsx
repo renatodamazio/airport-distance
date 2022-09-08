@@ -41,27 +41,6 @@ function Search() {
       iataCode: "",
     });
 
-  const search = (text: string): object[] => {
-    if (text.length < 3) return [];
-    const query = text.toLowerCase();
-    const results = [...airports].filter(
-      (item: any) =>
-        item.name.toLowerCase().includes(query) ||
-        item.iata_code.toLowerCase().includes(query)
-    );
-
-    return results;
-  };
-
-  const searchAirPorts = (text: string): object => {
-    const resp: any = search(text);
-    if (resp) {
-      return resp.splice(0, 5);
-    } else {
-      return [];
-    }
-  };
-
   const getCoordenates = (data: any) => {
     const geo = data._geoloc;
     return { lat: geo.lat, lng: geo.lng };
