@@ -49,7 +49,7 @@ const paths = {
   width: "100%",
   height: "100%",
   overflow: "auto",
-  padding: 10,
+  padding: 30,
 };
 
 function App() {
@@ -68,7 +68,7 @@ function App() {
             </CardContent>
           </Card>
           <div>
-            <Card style={{borderRadius: 0}}>
+            <Card style={{ borderRadius: 0 }}>
               <CardContent>
                 <Divider>
                   <Typography variant="h6">Distance</Typography>
@@ -79,9 +79,6 @@ function App() {
           </div>
         </div>
         <div style={paths}>
-          <Divider>
-            <Typography variant="h6">Directions</Typography>
-          </Divider>
           <Steps />
         </div>
       </div>
@@ -90,38 +87,6 @@ function App() {
         <Map />
       </div>
     </div>
-    // <Box style={{ maxHeight: "100vh", overflow: "hidden" }}>
-    //   <Grid container>
-    //     <Grid item xs={3} style={{ maxHeight: "100vh" }}>
-    //       <Card style={{ borderRadius: 0, height: "100%" }}>
-    //         <CardContent>
-    //           <Transport />
-    //         </CardContent>
-
-    //         <CardContent>
-    //           <Search />
-    //         </CardContent>
-
-    //         <Divider />
-
-    //         <CardContent>
-    //           <DistanceService />
-    //         </CardContent>
-
-    //         <Divider />
-
-    //         <CardContent>
-    //           <div style={{ display: "flex", height: "100%", border: "2px solid blue" }}>
-    //             {/* <Steps /> */}
-    //           </div>
-    //         </CardContent>
-    //       </Card>
-    //     </Grid>
-    //     <Grid item xs={9}>
-    //       <Map />
-    //     </Grid>
-    //   </Grid>
-    // </Box>
   );
 }
 
