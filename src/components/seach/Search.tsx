@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import airports from "../../lib/airports.json";
 import { useDispatch, batch } from "react-redux";
 
@@ -6,9 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { setDestination, setOrigin } from "../../store/reducers/coordenates";
-
-import ResultsList from "./ResultsList";
-import Input from "./Input";
+import AutocompleteField from "./Autocomplete";
+import { Button, Grid } from "@mui/material";
 
 interface optionsReferecenPoints {
   airportList?: any;
@@ -68,24 +67,6 @@ function Search() {
     return { lat: geo.lat, lng: geo.lng };
   };
 
-  const getAirportSearchList = (query: HTMLInputElement) => {
-    const { value, name } = query;
-
-    const listAirports: object = searchAirPorts(value);
-
-    if (name === "destination") {
-      setDestinationOptions({
-        ...originOptions,
-        airportList: listAirports,
-      });
-    } else {
-      setOriginOptions({
-        ...originOptions,
-        airportList: listAirports,
-      });
-    }
-  };
-
   const getLatLgnFromOptionList = (data: any, direction: string) => {
     const coordenates = getCoordenates(data);
 
@@ -99,7 +80,7 @@ function Search() {
         ...destinationOptions,
         name: data.name,
         iataCode: data.iata_code,
-        airportList: []
+        airportList: [],
       });
     } else {
       setDirections({
@@ -110,7 +91,7 @@ function Search() {
       setOriginOptions({
         name: data.name,
         iataCode: data.iata_code,
-        airportList: []
+        airportList: [],
       });
     }
   };
@@ -138,39 +119,31 @@ function Search() {
   };
 
   return (
-    <>
+    <Grid container spacing={2}>
       <ToastContainer />
 
-      <div>
-        <Input
-          value={originOptions.name}
+      <Grid item xs={12}>
+        <AutocompleteField
+          getLatLgnFromOptionList={getLatLgnFromOptionList}
+          label="Origin"
           name="origin"
-          onInput={(e: any) => getAirportSearchList(e?.target)}
         />
-        <ResultsList
-          direction="origin"
-          onClick={getLatLgnFromOptionList}
-          options={originOptions.airportList}
-        />
-      </div>
+      </Grid>
 
-      <div>
-        <Input
-          value={destinationOptions.name}
+      <Grid item xs={12}>
+        <AutocompleteField
+          getLatLgnFromOptionList={getLatLgnFromOptionList}
+          label="Destination"
           name="destination"
-          onInput={(e: any) => getAirportSearchList(e?.target)}
         />
-        <ResultsList
-          direction="destination"
-          onClick={getLatLgnFromOptionList}
-          options={destinationOptions.airportList}
-        />
-      </div>
+      </Grid>
 
-      <div>
-        <button onClick={showResults}>SHow results</button>
-      </div>
-    </>
+      <Grid item xs={12}>
+        <Button size="large" variant="contained" onClick={showResults}>
+          SHow results
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
 
