@@ -20,7 +20,7 @@ import {
 const containerStyle = {
   width: "100wh",
   height: "100vh",
-  display: "flex"
+  display: "flex",
 };
 
 const center = {
@@ -34,6 +34,8 @@ function Map() {
   const [makers, setMakers] = useState<any>([]);
 
   const dispatch = useDispatch();
+
+  const transport = useSelector((state: any) => state.distances.transport);
 
   const { origin, destination } = useSelector(
     (state: any) => state.coordenates
@@ -69,12 +71,29 @@ function Map() {
       destination.lng
     );
 
-    const getDistances = () => {
+    const getDistances = useCallback(() => {
+      let travelMode = google.maps.TravelMode.DRIVING;
+
+      switch (transport) {
+        case "DRIVING":
+          travelMode = google.maps.TravelMode.DRIVING;
+          break;
+        case "BICYCLING":
+          travelMode = google.maps.TravelMode.BICYCLING;
+          break;
+        case "WALKING":
+          travelMode = google.maps.TravelMode.WALKING;
+          break;
+        case "TRANSIT":
+          travelMode = google.maps.TravelMode.TRANSIT;
+          break;
+      }
+
       DirectionsService.route(
         {
           origin: new google.maps.LatLng(origin.lat, origin.lng),
           destination: new google.maps.LatLng(destination.lat, destination.lng),
-          travelMode: google.maps.TravelMode.DRIVING,
+          travelMode: travelMode,
         },
         (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
@@ -89,13 +108,11 @@ function Map() {
           batch(() => {
             dispatch(setDistance(data?.distance?.text));
             dispatch(setDuration(data?.duration?.text));
-
-            // console.log(...data?.steps)
             dispatch(setSteps(data?.steps));
           });
         }
       );
-    };
+    }, []);
 
     batch(() => {
       dispatch(setNautical(distance_in_nm));
@@ -161,11 +178,11 @@ function Map() {
         })}
 
         <PolylineDistance directions={places} />
-                
-          <DirectionRender
-            places={places}
-            travelMode={google.maps.TravelMode.DRIVING}
-          />
+
+        <DirectionRender
+          places={places}
+          travelMode={transport}
+        />
 
         <CalcDirections />
       </>

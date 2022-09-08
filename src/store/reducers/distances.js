@@ -8,7 +8,7 @@ export const distances = createSlice({
     steps: {},
     nautical: 0,
     kilometers: 0,
-    transport: "DRIVING",
+    transport: "BYCICLING",
     start_address: "",
     end_address: "",
   },

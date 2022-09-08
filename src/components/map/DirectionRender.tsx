@@ -42,7 +42,7 @@ function DirectionRender(props: any) {
 
   useEffect(() => {
     initDirections();
-  }, []);
+  }, [travelMode]);
 
   return (
     <>
