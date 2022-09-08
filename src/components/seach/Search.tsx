@@ -1,17 +1,46 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import airports from "../../lib/airports.json";
-import { useDispatch } from "react-redux";
+import { useDispatch, batch } from "react-redux";
 
-import { setOrigin } from "../../store/reducers/coordenates";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { setDestination, setOrigin } from "../../store/reducers/coordenates";
+
 import ResultsList from "./ResultsList";
+import Input from "./Input";
+
+interface optionsReferecenPoints {
+  airportList?: any;
+  name?: string;
+  iataCode?: string;
+}
+
+interface destinationsReference {
+  origin: object;
+  destination: object;
+}
 
 function Search() {
   const dispatch = useDispatch();
 
-  const originField = useRef<null | HTMLInputElement>(null);
-  const destinationField = useRef<null | HTMLInputElement>(null);
+  const [directions, setDirections] = useState<destinationsReference>({
+    origin: {},
+    destination: {},
+  });
 
-  const [options, setOptions] = useState<any>([]);
+  const [originOptions, setOriginOptions] = useState<optionsReferecenPoints>({
+    airportList: [],
+    name: "",
+    iataCode: "",
+  });
+
+  const [destinationOptions, setDestinationOptions] =
+    useState<optionsReferecenPoints>({
+      airportList: [],
+      name: "",
+      iataCode: "",
+    });
 
   const search = (text: string): object[] => {
     if (text.length < 3) return [];
@@ -25,10 +54,12 @@ function Search() {
     return results;
   };
 
-  const searchAirPorts = (text: string) => {
+  const searchAirPorts = (text: string): object => {
     const resp: any = search(text);
     if (resp) {
-      setOptions(resp.splice(0, 5));
+      return resp.splice(0, 5);
+    } else {
+      return [];
     }
   };
 
@@ -37,29 +68,109 @@ function Search() {
     return { lat: geo.lat, lng: geo.lng };
   };
 
-  const defineOriginLatLgn = (data: any) => {
-    const coordenates = getCoordenates(data);
-    dispatch(setOrigin(coordenates));
+  const getAirportSearchList = (query: HTMLInputElement) => {
+    const { value, name } = query;
 
-    const field = originField?.current;
-    if (field) {
-      field.value = data.name;
+    const listAirports: object = searchAirPorts(value);
+
+    if (name === "destination") {
+      setDestinationOptions({
+        ...originOptions,
+        airportList: listAirports,
+      });
+    } else {
+      setOriginOptions({
+        ...originOptions,
+        airportList: listAirports,
+      });
     }
-    setOptions([]);
+  };
+
+  const getLatLgnFromOptionList = (data: any, direction: string) => {
+    const coordenates = getCoordenates(data);
+
+    if (direction === "destination") {
+      setDirections({
+        ...directions,
+        destination: coordenates,
+      });
+
+      setDestinationOptions({
+        ...destinationOptions,
+        name: data.name,
+        iataCode: data.iata_code,
+        airportList: []
+      });
+    } else {
+      setDirections({
+        ...directions,
+        origin: coordenates,
+      });
+
+      setOriginOptions({
+        name: data.name,
+        iataCode: data.iata_code,
+        airportList: []
+      });
+    }
+  };
+
+  const checkEmptyDirections = (direction: object): any[] => {
+    return Object.keys(direction);
+  };
+
+  /**
+   * Active when click at button.
+   */
+  const showResults = () => {
+    const { origin, destination } = directions;
+
+    const isOriginValid = checkEmptyDirections(origin).length;
+    const isDestinationValid = checkEmptyDirections(destination).length;
+
+    if (!isOriginValid) return toast("Origin not provided.");
+    if (!isDestinationValid) return toast("Destination not provided.");
+
+    batch(() => {
+      dispatch(setOrigin(origin));
+      dispatch(setDestination(destination));
+    });
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Airport origin"
-        ref={originField}
-        onInput={(e: any) => searchAirPorts(e?.target?.value)}
-      />
-      
-      <button>Search</button>
-      <ResultsList onClick={defineOriginLatLgn} options={options} />
-    </div>
+    <>
+      <ToastContainer />
+
+      <div>
+        <Input
+          value={originOptions.name}
+          name="origin"
+          onInput={(e: any) => getAirportSearchList(e?.target)}
+        />
+        <ResultsList
+          direction="origin"
+          onClick={getLatLgnFromOptionList}
+          options={originOptions.airportList}
+        />
+      </div>
+
+      <div>
+        <Input
+          value={destinationOptions.name}
+          name="destination"
+          onInput={(e: any) => getAirportSearchList(e?.target)}
+        />
+        <ResultsList
+          direction="destination"
+          onClick={getLatLgnFromOptionList}
+          options={destinationOptions.airportList}
+        />
+      </div>
+
+      <div>
+        <button onClick={showResults}>SHow results</button>
+      </div>
+    </>
   );
 }
 

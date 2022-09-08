@@ -15,11 +15,13 @@
     "@types/node": "^16.11.57",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
+    "@types/react-notify-toast": "^0.5.3",
     "@types/react-redux": "^7.1.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.8",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },

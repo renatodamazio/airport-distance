@@ -11,11 +11,11 @@ export const coordenates = createSlice({
     setOrigin(state, action) {
       state.origin = { ...action.payload };
     },
-    setDesination(state, action) {
+    setDestination(state, action) {
       state.destination = { ...action.payload };
     },
   },
 });
 
-export const { setOrigin, setDesination } = coordenates.actions;
+export const { setOrigin, setDestination } = coordenates.actions;
 export default coordenates.reducer;
