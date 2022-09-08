@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import { Button, ButtonGroup } from "@mui/material";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { setTransport } from "../../store/reducers/distances";
 
 interface transportReference {
   title: string;
@@ -10,6 +13,11 @@ interface transportReference {
 }
 
 function Transport() {
+  const dispatch = useDispatch();
+  const { transport: activeTransport } = useSelector(
+    (state: any) => state.distances
+  );
+
   const [transports, setTransports] = useState<transportReference[]>([
     {
       title: "Driving",
@@ -39,6 +47,10 @@ function Transport() {
     justifyContent: "center",
   };
 
+  const defineTravelTransport = (ev: transportReference) => {
+    dispatch(setTransport(ev.code));
+  };
+
   return (
     <ButtonGroup
       variant="outlined"
@@ -46,7 +58,17 @@ function Transport() {
       style={styles}
     >
       {transports.map((transport: any, key: number) => {
-        return <Button key={key}>{transport.title}</Button>;
+        return (
+          <Button
+            variant={
+              activeTransport === transport.code ? "contained" : "outlined"
+            }
+            onClick={() => defineTravelTransport(transport)}
+            key={key}
+          >
+            {transport.title}
+          </Button>
+        );
       })}
     </ButtonGroup>
   );
