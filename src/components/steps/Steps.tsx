@@ -13,15 +13,15 @@ function Steps() {
   const directions = useSelector((state: any) => state.distances.steps);
   return (
     directions && (
-        <Stepper orientation="vertical">
-            {directions.map((direction: any, index: number) => {
-            return (
-                <Step>
-                <StepLabel>{direction.instructions}</StepLabel>
-                </Step>
-            );
-            })}
-        </Stepper>
+      <Stepper orientation="vertical">
+        {directions.map((direction: any, index: number) => {
+          return (
+            <Step>
+              <StepLabel><p dangerouslySetInnerHTML={{__html: direction.instructions}}></p></StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
     )
   );
 }
