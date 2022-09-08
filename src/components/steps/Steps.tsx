@@ -30,10 +30,10 @@ function Steps() {
       case "DRIVING":
         displayIcon = <MdDirectionsCar color="blue"/>
         break;
-      case "BYCICLING":
+      case "BICYCLING":
         displayIcon = <MdOutlineDirectionsBike/>
         break;
-      case "TRANSPORT":
+      case "TRANSIT":
         displayIcon = <MdDirectionsBus/>
         break;
       case "WALKING":
