@@ -41,7 +41,6 @@ function AutocompleteField(props: any) {
       onInput={(event: any) => filterAirports(event.target.value)}
       onChange={(_, b: any[]) => emitChange(b)}
       getOptionLabel={(item) => item.name || item.iata_code}
-      sx={{ width: 300 }}
       renderOption={(props, option) => (
         <Box component="li" {...props} key={option.iata_code}>
           {option.iata_code} - {option.name}

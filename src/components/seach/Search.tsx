@@ -6,8 +6,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { setDestination, setOrigin } from "../../store/reducers/coordenates";
 import AutocompleteField from "./Autocomplete";
-import { Button, Grid } from "@mui/material";
+import {
+  Button,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from "@mui/material";
 import { setEndAddress, setStartAddress } from "../../store/reducers/distances";
+
+import TripOriginIcon from "@mui/icons-material/TripOrigin";
+import RoomIcon from "@mui/icons-material/Room";
 
 interface optionsReferecenPoints {
   airportList?: any;
@@ -107,23 +117,38 @@ function Search() {
       <ToastContainer />
 
       <Grid item xs={12}>
-        <AutocompleteField
-          getLatLgnFromOptionList={getLatLgnFromOptionList}
-          label="Origin"
-          name="origin"
-        />
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <TripOriginIcon fontSize="small" />
+            </ListItemIcon>
+
+            <ListItemText>
+              <AutocompleteField
+                getLatLgnFromOptionList={getLatLgnFromOptionList}
+                label="Origin"
+                name="origin"
+              />
+            </ListItemText>
+          </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <RoomIcon fontSize="small" color="secondary" />
+            </ListItemIcon>
+            <ListItemText>
+              <AutocompleteField
+                getLatLgnFromOptionList={getLatLgnFromOptionList}
+                label="Destination"
+                name="destination"
+              />
+            </ListItemText>
+          </ListItem>
+        </List>
       </Grid>
 
       <Grid item xs={12}>
-        <AutocompleteField
-          getLatLgnFromOptionList={getLatLgnFromOptionList}
-          label="Destination"
-          name="destination"
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Button size="large" variant="contained" onClick={showResults}>
+        <Button size="large" variant="contained" onClick={showResults} fullWidth={true}>
           SHow results
         </Button>
       </Grid>
