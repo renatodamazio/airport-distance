@@ -24,6 +24,8 @@ function Steps() {
   const iconContructor = () => {
     const icon = directions[0].travel_mode;
 
+    console.log(icon)
+
     let displayIcon:any = <MdDirectionsCar color="blue"/>;
 
     switch(icon) {
