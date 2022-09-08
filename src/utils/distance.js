@@ -18,24 +18,21 @@ module.exports = {
   },
 
   calcKilometers: (lat1, lon1, lat2, lon2) => {
-    const toRad = (param) => {
-      return (param * Math.PI) / 180;
+    const toRad = (Value) => {
+      return (Value * Math.PI) / 180;
     };
 
-    let R = 6371; // km
-    let x1 = lat2 - lat1;
-    let dLat = toRad(x1);
-    let x2 = lon2 - lon1;
-    let dLon = toRad(x2);
-    let a =
+    var R = 6371; // km
+    var dLat = toRad(lat2 - lat1);
+    var dLon = toRad(lon2 - lon1);
+    var lt1 = toRad(lat1);
+    var lt2 = toRad(lat2);
+
+    var a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    let d = R * c;
-    //Kilometers:
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lt1) * Math.cos(lt2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
     return d;
   },
 };

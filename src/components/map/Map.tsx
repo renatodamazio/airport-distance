@@ -16,12 +16,11 @@ import {
   setDuration,
   setSteps,
   setKilometers,
-  setStartAddress,
-  setEndAddress,
 } from "../../store/reducers/distances";
 const containerStyle = {
-  width: "800px",
-  height: "400px",
+  width: "100wh",
+  height: "100vh",
+  display: "flex"
 };
 
 const center = {
@@ -32,7 +31,6 @@ const center = {
 function Map() {
   const [mapKey, setMapKey] = useState<number>(0);
   const [map, setMap] = useState<any>("");
-  const [ready, setReady] = useState<boolean>(false);
   const [makers, setMakers] = useState<any>([]);
 
   const dispatch = useDispatch();
@@ -52,69 +50,86 @@ function Map() {
   const CalcDirections = () => {
     const DirectionsService = new window.google.maps.DirectionsService();
 
-    DirectionsService.route(
-      {
-        origin: new google.maps.LatLng(origin.lat, origin.lng),
-        destination: new google.maps.LatLng(destination.lat, destination.lng),
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
-          const data = result?.routes[0].legs[0];
+    let data: any = {
+      distance: "",
+      duration: "",
+      steps: "",
+    };
 
-          const distance_in_km = calcKilometers(
-            origin.lat,
-            origin.lng,
-            destination.lat,
-            destination.lng
-          );
-          const distance_in_nm = calcNauticalMiles(
-            origin.lat,
-            origin.lng,
-            destination.lat,
-            destination.lng
-          );
-
-          batch(() => {
-            dispatch(setDistance(data?.distance?.text));
-            dispatch(setNautical(distance_in_nm));
-            dispatch(setKilometers(distance_in_km));
-            dispatch(setDuration(data?.duration?.text));
-            dispatch(setSteps(data?.steps));
-            dispatch(setStartAddress(data?.start_address));
-            dispatch(setEndAddress(data?.end_address));
-          });
-        } else {
-          console.error(`error fetching directions ${result}`);
-        }
-      }
+    const distance_in_km = calcKilometers(
+      origin.lat,
+      origin.lng,
+      destination.lat,
+      destination.lng
+    );
+    const distance_in_nm = calcNauticalMiles(
+      origin.lat,
+      origin.lng,
+      destination.lat,
+      destination.lng
     );
 
-    return <></>
+    const getDistances = () => {
+      DirectionsService.route(
+        {
+          origin: new google.maps.LatLng(origin.lat, origin.lng),
+          destination: new google.maps.LatLng(destination.lat, destination.lng),
+          travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            data = result?.routes[0].legs[0];
+          } else {
+            data = {
+              distance: false,
+              duration: false,
+              steps: false,
+            };
+          }
+          batch(() => {
+            dispatch(setDistance(data?.distance?.text));
+            dispatch(setDuration(data?.duration?.text));
+
+            // console.log(...data?.steps)
+            dispatch(setSteps(data?.steps));
+          });
+        }
+      );
+    };
+
+    batch(() => {
+      dispatch(setNautical(distance_in_nm));
+      dispatch(setKilometers(distance_in_km));
+    });
+
+    useEffect(() => {
+      getDistances();
+    }, []);
+
+    return <></>;
   };
 
-  const clearMakers = (map:any) => {
-    
-  }
+  const onLoad = useCallback(
+    function callback(map: any) {
+      const bounds = new window.google.maps.LatLngBounds();
+      let mkr: any = "";
 
-  const onLoad = useCallback(function callback(map: any) {
-    const bounds = new window.google.maps.LatLngBounds();
-    let mkr: any = "";
+      for (var i = 0; i < places.length; i++) {
+        mkr = new google.maps.Marker({
+          position: new google.maps.LatLng(places[i], places[i]),
+          map: map,
+        });
 
-    for (var i = 0; i < places.length; i++) {
-      mkr = new google.maps.Marker({
-        position: new google.maps.LatLng(places[i], places[i]),
-        map: map,
-      });
+        bounds.extend(mkr.position);
+      }
 
-      bounds.extend(mkr.position);
-    }
+      map.fitBounds(bounds);
+      setMap(map);
 
-    map.fitBounds(bounds);
-    setMap(map);
-
-    dispatch(setMapLoad(true));
-  }, [origin, destination]);
+      dispatch(setMapLoad(true));
+    },
+    [origin, destination]
+  );
 
   const onUnmount = useCallback(function callback() {
     dispatch(setMapLoad(false));
@@ -125,17 +140,6 @@ function Map() {
   }, [mapKey]);
 
   useEffect(() => {
-    setReady(false);
-
-    // function setMapOnAll(map: google.maps.Map | null) {
-    //   for (let i = 0; i < places.length; i++) {
-    //     places[i].setMap(map);
-    //   }
-    // }
-
-    // setMapOnAll(null);
-    setReady(true);
-
     setMakers(places);
 
     setMapKey((prev) => (prev += 1));
@@ -147,7 +151,7 @@ function Map() {
       mapContainerStyle={containerStyle}
       center={center}
       zoom={1}
-      onLoad={onLoad} 
+      onLoad={onLoad}
       onUnmount={onUnmount}
     >
       <>
@@ -157,7 +161,7 @@ function Map() {
         })}
 
         <PolylineDistance directions={places} />
-{/*         
+        {/*         
           <DirectionRender
             places={places}
             travelMode={google.maps.TravelMode.DRIVING}

@@ -1,10 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import coordenates from "./reducers/coordenates";
 import distances from "./reducers/distances";
 import maps from "./reducers/maps";
 import travel from "./reducers/travel";
 
+const customizedMiddleware = getDefaultMiddleware({
+  serializableCheck: false
+})
+
 const store = configureStore({
+  middleware: customizedMiddleware,
   reducer: {
     coordenates,
     distances,

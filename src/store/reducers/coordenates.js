@@ -9,10 +9,10 @@ export const coordenates = createSlice({
 
   reducers: {
     setOrigin(state, action) {
-      state.origin = { ...action.payload };
+      state.origin = action.payload;
     },
     setDestination(state, action) {
-      state.destination = { ...action.payload };
+      state.destination = action.payload;
     },
   },
 });

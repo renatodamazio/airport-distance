@@ -44,7 +44,7 @@ function AutocompleteField(props: any) {
       sx={{ width: 300 }}
       renderOption={(props, option) => (
         <Box component="li" {...props} key={option.iata_code}>
-          {option.name}
+          {option.iata_code} - {option.name}
         </Box>
       )}
       renderInput={(params) => <TextField {...params} label={label} />}

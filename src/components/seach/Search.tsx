@@ -1,5 +1,4 @@
 import { useState } from "react";
-import airports from "../../lib/airports.json";
 import { useDispatch, batch } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { setDestination, setOrigin } from "../../store/reducers/coordenates";
 import AutocompleteField from "./Autocomplete";
 import { Button, Grid } from "@mui/material";
+import { setEndAddress, setStartAddress } from "../../store/reducers/distances";
 
 interface optionsReferecenPoints {
   airportList?: any;
@@ -48,8 +48,11 @@ function Search() {
 
   const getLatLgnFromOptionList = (data: any, direction: string) => {
     const coordenates = getCoordenates(data);
+    console.log(data);
 
     if (direction === "destination") {
+      dispatch(setEndAddress(data));
+
       setDirections({
         ...directions,
         destination: coordenates,
@@ -62,6 +65,8 @@ function Search() {
         airportList: [],
       });
     } else {
+      dispatch(setStartAddress(data));
+
       setDirections({
         ...directions,
         origin: coordenates,
