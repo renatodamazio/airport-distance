@@ -12,6 +12,8 @@ import { calcKilometers, calcNauticalMiles } from "../../utils/distance";
 import markerOrigin from "../../icons/origin-map-marker.png";
 import markerDestination from "../../icons/destination-map-marker.png";
 
+import { styles } from "./map.style";
+
 import {
   setDistance,
   setNautical,
@@ -177,6 +179,7 @@ function Map() {
       center={center}
       zoom={13}
       onLoad={onLoad}
+      options={{ styles }}
       onUnmount={onUnmount}
     >
       <>
