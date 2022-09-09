@@ -24,7 +24,7 @@
     justify-content: center;
 }
 
-.searchContainer > .MuiGrid-root.reverse-column {
+.searchContainer > .reverse-column {
     flex-direction: row-reverse;
 }
 
