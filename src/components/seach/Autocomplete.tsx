@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { createFilterOptions } from "@mui/material/Autocomplete";
@@ -16,12 +16,13 @@ interface airportReference {
   objectID?: string;
 }
 
-const AutocompleteField = forwardRef((props: any) => {
+const AutocompleteField = (props: any) => {
   const [airportsAvailable, setAirportsAvailable] = useState<
     airportReference[]
-  >([{name: ""}]);
+  >([{ name: "" }]);
 
-  const { name, label, getLatLgnFromOptionList, defaultValue } = props;
+  const { name, label, getLatLgnFromOptionList, defaultValue, inputProps } =
+    props;
 
   const ref = useRef<any>(null);
 
@@ -48,32 +49,34 @@ const AutocompleteField = forwardRef((props: any) => {
   });
 
   return (
-   <>
-     <Autocomplete
-      disablePortal
-      size="medium"
-      filterOptions={filterOptions}
-      defaultValue={{ name: defaultValue.name }}
-      options={airportsAvailable}
-      onInput={(event: any) => filterAirports(event.target.value)}
-      onChange={(_, b: any[]) => emitChange(b)}
-      getOptionLabel={(item) => (item.name || item.iata_code) || ""}
-      renderOption={(props, option) => (
-        <Box component="li" {...props} key={option.iata_code}>
-          {option.iata_code} - {option.name}
-        </Box>
-      )}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          autoFocus
-          label={label}
-        />
-      )}
-      ref={ref}
-    />
-   </>
+    <>
+      <Autocomplete
+        disablePortal
+        size="medium"
+        filterOptions={filterOptions}
+        defaultValue={{ name: defaultValue.name }}
+        options={airportsAvailable}
+        onInput={(event: any) => filterAirports(event.target.value)}
+        onChange={(_, b: any[]) => emitChange(b)}
+        getOptionLabel={(item) => item.name || item.iata_code || ""}
+        renderOption={(props, option) => (
+          <Box component="li" {...props} key={option.iata_code}>
+            {option.iata_code} - {option.name}
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            inputProps={{ ...params.inputProps, tabIndex: inputProps.tabIndex }}
+            autoFocus
+            label={label}
+          />
+        )}
+        ref={ref}
+      />
+
+    </>
   );
-});
+};
 
 export default AutocompleteField;

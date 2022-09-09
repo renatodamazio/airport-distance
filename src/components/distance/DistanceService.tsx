@@ -66,7 +66,7 @@ function DirectionService() {
       {travelMeasures.map((travel: travelMeasuresReference, index: number) => {
         return (
           travel.distance ? (
-            <ListItem style={{ background: travel?.bgColor, borderRadius: 3, marginBottom: 2}}>
+            <ListItem key={index} style={{ background: travel?.bgColor, borderRadius: 3, marginBottom: 2}}>
               <ListItemIcon>
                 {travel?.icon}
               </ListItemIcon>

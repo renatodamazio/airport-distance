@@ -54,7 +54,7 @@ function Steps() {
       <Stepper orientation="vertical">
         {directions.map((direction: any, index: number) => {
           return (
-            <Step active={true}>
+            <Step active={true} key={index}>
               <StepLabel StepIconComponent={iconContructor}>
                 <p
                   dangerouslySetInnerHTML={{ __html: direction.instructions }}

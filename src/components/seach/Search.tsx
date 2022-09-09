@@ -187,6 +187,7 @@ function Search() {
 
                 <ListItemText>
                   <AutocompleteField
+                    inputProps={{ tabIndex: index += 1 }}
                     defaultValue={
                       item.name === "origin" ? start_address : end_address
                     }
