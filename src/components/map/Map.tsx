@@ -126,23 +126,31 @@ function Map() {
     return <></>;
   };
 
+  const checkEmptyDirections = (direction: object): any[] => {
+    return Object.keys(direction);
+  };
+
   const onLoad = useCallback(
     function callback(map: any) {
       const bounds = new window.google.maps.LatLngBounds();
       let mkr: any = "";
 
-      for (var i = 0; i < places.length; i++) {
-        mkr = new google.maps.Marker({
-          position: new google.maps.LatLng(places[i], places[i]),
-          map: map,
-        });
+      const origin = checkEmptyDirections(places[0]);
+      const destination = checkEmptyDirections(places[1]);
 
-        bounds.extend(mkr.position);
-      }
+      if (origin.length && destination.length) {
+        for (var i = 0; i < places.length; i++) {
+          mkr = new google.maps.Marker({
+            position: new google.maps.LatLng(places[i], places[i]),
+            map: map,
+          });
 
-      map.fitBounds(bounds);
+          bounds.extend(mkr.position);
+        }
+        map.fitBounds(bounds);
+      } 
+
       setMap(map);
-
       dispatch(setMapLoad(true));
     },
     [origin, destination]
@@ -167,7 +175,7 @@ function Map() {
       key={mapKey}
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={1}
+      zoom={13}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
@@ -179,10 +187,7 @@ function Map() {
 
         <PolylineDistance directions={places} />
 
-        <DirectionRender
-          places={places}
-          travelMode={transport}
-        />
+        <DirectionRender places={places} travelMode={transport} />
 
         <CalcDirections />
       </>
