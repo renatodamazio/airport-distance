@@ -199,7 +199,7 @@ export const styles = [
       "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#0b7bfe"
+          "color": "#6ac0ff"
         }
       ]
     },
