@@ -40,6 +40,7 @@ function Map() {
 
   const transport = useSelector((state: any) => state.distances.transport);
   const inverse = useSelector((state: any) => state.distances.inverse);
+  const sameCountry = useSelector((state: any) => state.distances.sameCountry);
 
   const { origin, destination } = useSelector(
     (state: any) => state.coordinates
@@ -183,7 +184,7 @@ function Map() {
       <>
         <PolylineDistance directions={places} />
 
-        <DirectionRender places={places} travelMode={transport} />
+         {sameCountry && <DirectionRender places={places} travelMode={transport} />} 
 
         <CalcDirections />
       </>
