@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from "react";
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import DirectionRender from "./DirectionRender";
 import PolylineDistance from "../polyline/Polyline";
@@ -36,8 +36,6 @@ const center = {
 function Map() {
   const [mapKey, setMapKey] = useState<number>(0);
   const [map, setMap] = useState<any>("");
-  const [makers, setMakers] = useState<any>([]);
-
   const dispatch = useDispatch();
 
   const transport = useSelector((state: any) => state.distances.transport);
@@ -168,7 +166,6 @@ function Map() {
   const onUnmount = useCallback(function callback() {}, []);
 
   useEffect(() => {
-    setMakers(places);
     setMapKey((prev) => (prev += 1));
   }, [origin, destination]);
 
@@ -183,20 +180,6 @@ function Map() {
       onUnmount={onUnmount}
     >
       <>
-        {/* {makers.map((marker: any, index: number) => {
-          const position = { lat: marker.lat, lng: marker.lng };
-          return (
-            <MarkerF
-              icon={{
-                url: "https://img.icons8.com/fluency/344/where.png",
-                scaledSize: new google.maps.Size(50, 50)
-              }}
-              position={position}
-              key={index}
-            />
-          );
-        })} */}
-
         <PolylineDistance directions={places} />
 
         <DirectionRender places={places} travelMode={transport} />

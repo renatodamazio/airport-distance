@@ -4,6 +4,7 @@ import DistanceService from "./components/distance/DistanceService";
 import { Divider, Card, CardContent, Typography } from "@mui/material";
 import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
+import { Colors } from "./theme/colors";
 
 type FlexDirection =
   | "column"
@@ -31,6 +32,7 @@ const main = {
   height: "100%",
   display: "flex",
   overflow: "hidden",
+  background: Colors.default.dark
 };
 
 const section = {
