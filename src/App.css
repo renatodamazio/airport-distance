@@ -3,13 +3,14 @@
   height: 100%;
   display: flex;
   overflow: hidden;
-  background: #efef;
+  background: #deefff;
 }
 
 .app-side-bar {
   display: flex;
   height: 100%;
-  width: 40%;
+  width: 35%;
+  padding: 16px;
   maxwidth: 400px;
   padding: 12;
   flex-direction: column;
@@ -20,14 +21,18 @@
 .app-map-container {
   width: 100%;
   height: 100%;
-  background: #efef;
+  background: #deefff;
 }
 
-.app-close-main-mobile {
-  position: absolute;
-  top: 31px;
-  left: 36px;
+.app-close-main-mobile{
+    display: none;
 }
+
+.app-show-side-bar {
+    display: none
+}
+
+
 
 /*=============================================
 =            Mobile definitions            =
@@ -44,9 +49,16 @@
     padding: 16px;
   }
 
+  .app-close-main-mobile {
+    position: absolute;
+    top: 31px;
+    left: 36px;
+    display: block;
+    z-index: 999;
+  }  
+
   .app-side-bar.hidden-side-bar {
-    height: 0%;
-    overflow: hidden;
+    transform: translateY(150%);
   }
 
   .app-show-side-bar {
@@ -63,6 +75,10 @@
 
   .app-show-side-bar.hidden {
     transform: translateY(150%);
+  }
+
+  .app-steps {
+    min-height: 300px;
   }
 }
 

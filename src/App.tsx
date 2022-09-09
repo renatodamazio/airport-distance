@@ -22,6 +22,7 @@ function App() {
   const [toogleApp, setToggleApp] = useState<boolean>(false);
 
   const sameCountry = useSelector((state: any) => state.distances.sameCountry);
+  
   return (
     <div className={`app-main`}>
       <SearchModal />
@@ -49,25 +50,25 @@ function App() {
           </Card>
         </div>
         {sameCountry && (
-          <Card style={{ overflow: "auto" }}>
+          <Card style={{ overflow: "auto" }} className="app-steps">
             <CardContent>
               <Steps />
             </CardContent>
           </Card>
         )}
-
-        <div className={`app-show-side-bar ${!toogleApp ? "hidden" : ""}`}>
-          <Chip
-            label="Open informations"
-            size="medium"
-            color="secondary"
-            onClick={() => setToggleApp(!toogleApp)}
-          />
-        </div>
       </div>
 
       <div className="app-map-container">
         <Map />
+      </div>
+
+      <div className={`app-show-side-bar ${!toogleApp ? "hidden" : ""}`}>
+        <Chip
+          label="Open informations"
+          size="medium"
+          color="secondary"
+          onClick={() => setToggleApp(!toogleApp)}
+        />
       </div>
     </div>
   );
