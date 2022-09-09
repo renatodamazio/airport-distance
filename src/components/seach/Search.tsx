@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, batch, useSelector } from "react-redux";
 
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Colors } from "../../theme/colors";
@@ -165,7 +164,6 @@ function Search() {
 
   return (
     <Grid container spacing={1}>
-      <ToastContainer />
       <Grid item xs={11}>
         <List className={inverse ? "reverse-column" : ""}>
           {searchFields.map((item: any, index: number) => {
@@ -192,7 +190,7 @@ function Search() {
         </List>
       </Grid>
 
-      <Grid item xs={1} style={{ display: "flex", alignItems: "center", paddingLeft: 0 }}>
+      <Grid className="column-invert-button" item xs={1} style={{ display: "flex", alignItems: "center", paddingLeft: 0 }}>
         <Tooltip
           title={"invert origin point and destination"}
           placement="bottom-start"

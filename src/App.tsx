@@ -6,6 +6,7 @@ import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
 import { Colors } from "./theme/colors";
 import { useSelector } from "react-redux";
+import SearchModal from "./components/searchModal/SearchModal"
 
 type FlexDirection =
   | "column"
@@ -52,6 +53,7 @@ function App() {
   const sameCountry = useSelector((state: any) => state.distances.sameCountry);
   return (
     <div style={main}>
+      <SearchModal />
       <div style={aside}>
         <div style={{ width: "100%" }}>
           <Card style={{ marginBottom: 8, overflow: "inherit" }}>
