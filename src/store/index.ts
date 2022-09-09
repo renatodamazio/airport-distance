@@ -3,6 +3,7 @@ import coordenates from "./reducers/coordenates";
 import distances from "./reducers/distances";
 import maps from "./reducers/maps";
 import travel from "./reducers/travel";
+import loading from "./reducers/loading";
 
 const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false
@@ -14,6 +15,7 @@ const store = configureStore({
     coordenates,
     distances,
     travel,
+    loading,
     maps,
   },
 });

@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
+import { useSelector } from "react-redux";
 
 type FlexDirection =
   | "column"

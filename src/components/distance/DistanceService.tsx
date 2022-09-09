@@ -18,7 +18,7 @@ function DirectionService() {
   );
   return (
     <List>
-      <ListItem>
+      <ListItem style={{ display: !kilometers || kilometers === "NaN" ? "none" : "" }}>
         <ListItemIcon>
           <MdSpeed />
         </ListItemIcon>
@@ -35,7 +35,7 @@ function DirectionService() {
         </ListItemText>
       </ListItem>
 
-      <ListItem>
+      <ListItem style={{ display: !nautical || nautical === "NaN" ? "none" : "" }}>
         <ListItemIcon>
           <MdSailing />
         </ListItemIcon>
@@ -52,7 +52,7 @@ function DirectionService() {
         </ListItemText>
       </ListItem>
 
-      <ListItem style={{ display: !distance ? "none" : "" }}>
+      <ListItem style={{ display: !distance || distance === "NaN" ? "none" : "" }}>
         <ListItemIcon>
           <GiPathDistance />
         </ListItemIcon>
@@ -69,7 +69,7 @@ function DirectionService() {
         </ListItemText>
       </ListItem>
 
-      <ListItem style={{ display: !duration ? "none" : "" }}>
+      <ListItem style={{ display: !duration || duration === "NaN" ? "none" : "" }}>
         <ListItemIcon>
           <MdTimer />
         </ListItemIcon>

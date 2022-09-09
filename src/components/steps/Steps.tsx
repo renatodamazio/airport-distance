@@ -7,8 +7,6 @@ import {
   Typography,
 } from "@mui/material";
 
-import { MdTripOrigin} from "react-icons/md";
-
 import { useSelector } from "react-redux";
 
 import {
@@ -23,8 +21,6 @@ function Steps() {
 
   const iconContructor = () => {
     const icon = directions[0].travel_mode;
-
-    console.log(icon)
 
     let displayIcon:any = <MdDirectionsCar color="blue"/>;
 

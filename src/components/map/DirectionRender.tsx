@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import { DirectionsRenderer } from "@react-google-maps/api";
 
 function DirectionRender(props: any) {
+
   const { places, travelMode } = props;
 
   const [state, setState] = useState<any>({
     directions: {},
-    error: {},
+    error: false,
   });
 
   const initDirections = () => {
+
     const waypoints = places.map((p: any) => ({
       location: { lat: p.lat, lng: p.lng },
       stopover: true,
@@ -32,23 +34,22 @@ function DirectionRender(props: any) {
         if (status === google.maps.DirectionsStatus.OK) {
           setState({
             directions: result,
+            error: false,
           });
         } else {
-          setState({ error: result });
+          setState({ error: true });
         }
+
       }
     );
+
   };
 
   useEffect(() => {
     initDirections();
   }, [travelMode]);
 
-  return (
-    <>
-      <DirectionsRenderer directions={state.directions} />
-    </>
-  );
+  return !state.error ? <DirectionsRenderer directions={state.directions} /> : <></>;
 }
 
 export default DirectionRender;

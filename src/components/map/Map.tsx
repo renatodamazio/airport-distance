@@ -7,7 +7,6 @@ import PolylineDistance from "../polyline/Polyline";
 
 import { useSelector, useDispatch, batch } from "react-redux";
 
-import { setMapLoad } from "../../store/reducers/maps";
 import { calcKilometers, calcNauticalMiles } from "../../utils/distance";
 
 import {
@@ -17,6 +16,7 @@ import {
   setSteps,
   setKilometers,
 } from "../../store/reducers/distances";
+
 const containerStyle = {
   width: "100wh",
   height: "100vh",
@@ -151,22 +151,16 @@ function Map() {
       } 
 
       setMap(map);
-      dispatch(setMapLoad(true));
     },
     [origin, destination]
   );
 
   const onUnmount = useCallback(function callback() {
-    dispatch(setMapLoad(false));
   }, []);
 
   useEffect(() => {
-    if (mapKey) dispatch(setMapLoad(true));
-  }, [mapKey]);
 
-  useEffect(() => {
     setMakers(places);
-
     setMapKey((prev) => (prev += 1));
   }, [origin, destination]);
 
