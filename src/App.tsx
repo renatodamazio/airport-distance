@@ -22,10 +22,11 @@ function App() {
   const [toogleApp, setToggleApp] = useState<boolean>(false);
 
   const sameCountry = useSelector((state: any) => state.distances.sameCountry);
-  
+
   return (
     <div className={`app-main`}>
       <SearchModal />
+      
       <div className={`app-side-bar  ${toogleApp ? "hidden-side-bar" : ""}`}>
         <div style={{ width: "100%" }}>
           <div className="app-close-main-mobile">

@@ -8,7 +8,7 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 function SearchModal() {
-  const origin = useSelector((state:any) => state.coordenates.origin);
+  const origin = useSelector((state:any) => state.coordinates.origin);
 
   return (
     <div className={`main-search ${origin?.lat ? "hidden-main-search" : ""}`} style={{backgroundImage: `url(${illustration2})`}}>

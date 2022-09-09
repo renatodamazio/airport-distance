@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect } from "react";
+import React, { useState, forwardRef, useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { createFilterOptions } from "@mui/material/Autocomplete";
@@ -8,20 +8,22 @@ import { useSelector } from "react-redux";
 
 interface airportReference {
   name: string;
-  city: string;
-  country: string;
-  iata_code: string;
-  _geoloc: any | object;
-  links_count: string | number;
-  objectID: string;
+  city?: string;
+  country?: string;
+  iata_code?: string;
+  _geoloc?: any | object;
+  links_count?: string | number;
+  objectID?: string;
 }
 
-const AutocompleteField = forwardRef((props: any, ref: any) => {
-  const [airportsAvailable, setAirportsAvailable] = useState<airportReference[]>([]);
+const AutocompleteField = forwardRef((props: any) => {
+  const [airportsAvailable, setAirportsAvailable] = useState<
+    airportReference[]
+  >([{name: ""}]);
 
-  const { name, label, getLatLgnFromOptionList, defaultValue } =
-    props;
+  const { name, label, getLatLgnFromOptionList, defaultValue } = props;
 
+  const ref = useRef<any>(null);
 
   const emitChange = (airport: any[]) => {
     if (!airport) return false;
@@ -45,32 +47,32 @@ const AutocompleteField = forwardRef((props: any, ref: any) => {
     limit: 5,
   });
 
-  useEffect(() => {
-    if (!airportsAvailable.length && defaultValue) {
-      airportsAvailable[0] = defaultValue;
-    }
-  }, [defaultValue])
-
   return (
-    <Autocomplete
+   <>
+     <Autocomplete
       disablePortal
       size="medium"
       filterOptions={filterOptions}
-      defaultValue={airportsAvailable.length ? airportsAvailable[0] : ""}
+      defaultValue={{ name: defaultValue.name }}
       options={airportsAvailable}
       onInput={(event: any) => filterAirports(event.target.value)}
       onChange={(_, b: any[]) => emitChange(b)}
-      getOptionLabel={(item) => item.name || item.iata_code}
+      getOptionLabel={(item) => (item.name || item.iata_code) || ""}
       renderOption={(props, option) => (
         <Box component="li" {...props} key={option.iata_code}>
           {option.iata_code} - {option.name}
         </Box>
       )}
       renderInput={(params) => (
-        <TextField {...params} defaultValue="" label={label} />
+        <TextField
+          {...params}
+          autoFocus
+          label={label}
+        />
       )}
       ref={ref}
     />
+   </>
   );
 });
 

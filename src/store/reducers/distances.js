@@ -12,18 +12,11 @@ export const distances = createSlice({
     transport: "DRIVING",
     sameCountry: false,
     start_address:  {
-      "name": "Capital Intl",
-      "city": "Beijing",
-      "country": "China",
-      "iata_code": "PEK",
-      "_geoloc": {
-        "lat": 40.080111,
-        "lng": 116.584556
-      },
-      "links_count": 1069,
-      "objectID": "3364"
+     
     },
-    end_address: {},
+    end_address: {
+      name: ""
+    },
   },
 
   reducers: {

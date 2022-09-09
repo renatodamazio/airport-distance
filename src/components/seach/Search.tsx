@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Colors } from "../../theme/colors";
 
-import { setDestination, setOrigin } from "../../store/reducers/coordenates";
+import { setDestination, setOrigin } from "../../store/reducers/coordinates";
 import AutocompleteField from "./Autocomplete";
 import {
   Grid,
@@ -48,6 +48,7 @@ interface searchFieldsReference {
 function Search() {
   const dispatch = useDispatch();
 
+  const [refreshComponent, setRefreshComponent] = useState<number>(0);
   const inverse = useSelector((state: any) => state.distances.inverse);
   const start_address = useSelector(
     (state: any) => state.distances.start_address
@@ -85,20 +86,20 @@ function Search() {
       country: "",
     });
 
-  const getCoordenates = (data: any) => {
+  const getcoordinates = (data: any) => {
     const geo = data._geoloc;
     return { lat: geo.lat, lng: geo.lng };
   };
 
   const getLatLgnFromOptionList = (data: any, direction: string) => {
-    const coordenates = getCoordenates(data);
+    const coordinates = getcoordinates(data);
 
     if (direction === "destination") {
       dispatch(setEndAddress(data));
 
       setDirections({
         ...directions,
-        destination: coordenates,
+        destination: coordinates,
       });
 
       setDestinationOptions({
@@ -113,7 +114,7 @@ function Search() {
 
       setDirections({
         ...directions,
-        origin: coordenates,
+        origin: coordinates,
       });
 
       setOriginOptions({
@@ -154,19 +155,18 @@ function Search() {
   useEffect(() => {
     var arr = [...searchFields];
     let reverseArr = arr.reverse();
-
-    if (inverse) {
-      // reverseArr[0].label = "Airport Origin";
-      // reverseArr[1].label = "Airport Destination";
-    }
-
     setSearchFields(reverseArr);
 
     showResults();
   }, [inverse]);
 
+
+  useEffect(() => {
+    setRefreshComponent((prev) => prev += 1)
+  }, [end_address, start_address])
+
   return (
-    <Grid container spacing={1}>
+    <Grid key={refreshComponent} container spacing={1}>
       <Grid item xs={11}>
         <List className={inverse ? "reverse-column" : ""}>
           {searchFields.map((item: any, index: number) => {

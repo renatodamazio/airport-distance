@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const coordenates = createSlice({
-  name: "coordenates",
+export const coordinates = createSlice({
+  name: "coordinates",
   initialState: {
     origin: {},
     destination: {},
@@ -17,5 +17,5 @@ export const coordenates = createSlice({
   },
 });
 
-export const { setOrigin, setDestination } = coordenates.actions;
-export default coordenates.reducer;
+export const { setOrigin, setDestination } = coordinates.actions;
+export default coordinates.reducer;

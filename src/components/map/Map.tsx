@@ -42,7 +42,7 @@ function Map() {
   const inverse = useSelector((state: any) => state.distances.inverse);
 
   const { origin, destination } = useSelector(
-    (state: any) => state.coordenates
+    (state: any) => state.coordinates
   );
 
   const places = [origin, destination];
