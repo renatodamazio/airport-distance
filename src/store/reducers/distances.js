@@ -9,6 +9,7 @@ export const distances = createSlice({
     nautical: 0,
     kilometers: 0,
     transport: "DRIVING",
+    sameCountry: false,
     start_address: "",
     end_address: "",
   },
@@ -44,6 +45,10 @@ export const distances = createSlice({
 
     setTransport(state, action) {
       state.transport = action.payload;
+    },
+
+    setSameCountry(state, action) {
+      state.sameCountry = action.payload;
     }
   },
 });
@@ -56,7 +61,8 @@ export const {
   setNautical,
   setStartAddress,
   setEndAddress,
-  setTransport
+  setTransport,
+  setSameCountry
 } = distances.actions;
 
 export default distances.reducer;

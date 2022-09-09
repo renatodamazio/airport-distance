@@ -5,6 +5,7 @@ import { Divider, Card, CardContent, Typography } from "@mui/material";
 import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
 import { Colors } from "./theme/colors";
+import { useSelector } from "react-redux";
 
 type FlexDirection =
   | "column"
@@ -48,13 +49,14 @@ const paths = {
 };
 
 function App() {
+  const sameCountry = useSelector((state: any) => state.distances.sameCountry);
   return (
     <div style={main}>
       <div style={aside}>
         <div style={{ width: "100%" }}>
           <Card style={{ marginBottom: 8, overflow: "inherit" }}>
             <CardContent>
-              <Transport />
+              {sameCountry && <Transport />}
               <Search />
             </CardContent>
           </Card>
@@ -67,11 +69,13 @@ function App() {
             </CardContent>
           </Card>
         </div>
-        <Card style={{ overflow: "auto" }}>
-          <CardContent>
-            <Steps />
-          </CardContent>
-        </Card>
+        {sameCountry && (
+          <Card style={{ overflow: "auto" }}>
+            <CardContent>
+              <Steps />
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <div style={section}>

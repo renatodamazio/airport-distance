@@ -15,7 +15,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
-import { setEndAddress, setStartAddress } from "../../store/reducers/distances";
+import { setEndAddress, setStartAddress, setSameCountry } from "../../store/reducers/distances";
 
 import { HiLocationMarker } from "react-icons/hi";
 import { MdTripOrigin} from "react-icons/md";
@@ -24,11 +24,13 @@ interface optionsReferecenPoints {
   airportList?: any;
   name?: string;
   iataCode?: string;
+  country?:string;
 }
 
 interface destinationsReference {
   origin: object;
   destination: object;
+  country?:string;
 }
 
 function Search() {
@@ -39,10 +41,11 @@ function Search() {
     destination: {},
   });
 
-  const [_, setOriginOptions] = useState<optionsReferecenPoints>({
+  const [originOptions, setOriginOptions] = useState<optionsReferecenPoints>({
     airportList: [],
     name: "",
     iataCode: "",
+    country: ""
   });
 
   const [destinationOptions, setDestinationOptions] =
@@ -50,6 +53,7 @@ function Search() {
       airportList: [],
       name: "",
       iataCode: "",
+      country: ""
     });
 
   const getCoordenates = (data: any) => {
@@ -72,6 +76,7 @@ function Search() {
         ...destinationOptions,
         name: data.name,
         iataCode: data.iata_code,
+        country: data.country,
         airportList: [],
       });
     } else {
@@ -85,6 +90,7 @@ function Search() {
       setOriginOptions({
         name: data.name,
         iataCode: data.iata_code,
+        country: data.country,
         airportList: [],
       });
     }
@@ -104,6 +110,7 @@ function Search() {
     if (!isDestinationValid) return;
 
     batch(() => {
+      dispatch(setSameCountry(destinationOptions.country === originOptions.country));
       dispatch(setOrigin(origin));
       dispatch(setDestination(destination));
     });
