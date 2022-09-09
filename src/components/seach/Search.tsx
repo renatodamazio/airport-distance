@@ -49,6 +49,10 @@ function Search() {
   const dispatch = useDispatch();
 
   const inverse = useSelector((state: any) => state.distances.inverse);
+  const start_address = useSelector(
+    (state: any) => state.distances.start_address
+  );
+  const end_address = useSelector((state: any) => state.distances.end_address);
 
   const [searchFields, setSearchFields] = useState<searchFieldsReference[]>([
     {
@@ -152,11 +156,9 @@ function Search() {
     let reverseArr = arr.reverse();
 
     if (inverse) {
-
       // reverseArr[0].label = "Airport Origin";
       // reverseArr[1].label = "Airport Destination";
-
-    };
+    }
 
     setSearchFields(reverseArr);
 
@@ -180,6 +182,9 @@ function Search() {
 
                 <ListItemText>
                   <AutocompleteField
+                    defaultValue={
+                      item.name === "origin" ? start_address : end_address
+                    }
                     getLatLgnFromOptionList={getLatLgnFromOptionList}
                     label={item.label}
                     name={item.name}
@@ -191,7 +196,12 @@ function Search() {
         </List>
       </Grid>
 
-      <Grid className="column-invert-button" item xs={1} style={{ display: "flex", alignItems: "center", paddingLeft: 0 }}>
+      <Grid
+        className="column-invert-button"
+        item
+        xs={1}
+        style={{ display: "flex", alignItems: "center", paddingLeft: 0 }}
+      >
         <Tooltip
           title={"invert origin point and destination"}
           placement="bottom-start"
