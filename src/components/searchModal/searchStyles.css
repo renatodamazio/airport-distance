@@ -9,6 +9,12 @@
   background-color: #eee;
   background-size: cover;
   background-repeat: no-repeat;
+  transition: .900s opacity ease-in-out;
+}
+
+.main-search.hidden-main-search {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .searchContainer {

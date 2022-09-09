@@ -5,11 +5,13 @@ import "./searchStyles.css";
 import illustration2 from "../../illustrations/2.jpg";
 import logo from "../../icons/icons8-perímetro-virtual.gif";
 import { Typography } from "@mui/material";
-
+import { useSelector } from "react-redux";
 
 function SearchModal() {
+  const origin = useSelector((state:any) => state.coordenates.origin);
+
   return (
-    <div className="main-search" style={{backgroundImage: `url(${illustration2})`}}>
+    <div className={`main-search ${origin?.lat ? "hidden-main-search" : ""}`} style={{backgroundImage: `url(${illustration2})`}}>
       <div className="searchContainer">
           <div className="searchHeader">
             <div className="logo">
