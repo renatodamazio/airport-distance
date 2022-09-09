@@ -4,6 +4,8 @@ import { useDispatch, batch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { Colors } from "../../theme/colors";
+
 import { setDestination, setOrigin } from "../../store/reducers/coordenates";
 import AutocompleteField from "./Autocomplete";
 import {
@@ -118,7 +120,7 @@ function Search() {
       <Grid item xs={12}>
         <List>
           <ListItem>
-            <ListItemIcon><MdTripOrigin/></ListItemIcon>
+            <ListItemIcon><MdTripOrigin  color={Colors?.primary.main}/></ListItemIcon>
 
             <ListItemText>
               <AutocompleteField
@@ -130,7 +132,7 @@ function Search() {
           </ListItem>
 
           <ListItem>
-            <ListItemIcon><HiLocationMarker /></ListItemIcon>
+            <ListItemIcon><HiLocationMarker  color={Colors?.secondary.main}/></ListItemIcon>
             <ListItemText>
               <AutocompleteField
                 getLatLgnFromOptionList={getLatLgnFromOptionList}

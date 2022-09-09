@@ -28,22 +28,22 @@ function Transport() {
 
   const [transports, setTransports] = useState<transportReference[]>([
     {
-      icon: <MdDirectionsCar />,
+      icon: <MdDirectionsCar color={Colors?.shadow.main}/>,
       bgColor: Colors?.primary?.light,
       code: "DRIVING",
     },
     {
-      icon: <MdOutlineDirectionsBike />,
+      icon: <MdOutlineDirectionsBike color={Colors?.shadow.main} />,
       code: "BICYCLING",
       bgColor: Colors?.success?.light,
     },
     {
-      icon: <MdDirectionsBus />,
+      icon: <MdDirectionsBus color={Colors?.shadow.main} />,
       code: "TRANSIT",
       bgColor: Colors?.error?.light,
     },
     {
-      icon: <MdDirectionsWalk />,
+      icon: <MdDirectionsWalk color={Colors?.shadow.main} />,
       code: "WALKING",
       bgColor: Colors?.warning?.light,
     },
