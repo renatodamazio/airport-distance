@@ -154,16 +154,21 @@ function Search() {
 
   useEffect(() => {
     var arr = [...searchFields];
-    let reverseArr = arr.reverse();
-    setSearchFields(reverseArr);
+
+    if (inverse) {
+      let reverseArr = arr.reverse();
+      setSearchFields(reverseArr);
+
+      reverseArr[0].label = "Airport Destination";
+      reverseArr[1].label = "Airport Origin";
+    }
 
     showResults();
   }, [inverse]);
 
-
   useEffect(() => {
-    setRefreshComponent((prev) => prev += 1)
-  }, [end_address, start_address])
+    setRefreshComponent((prev) => (prev += 1));
+  }, [end_address, start_address]);
 
   return (
     <Grid key={refreshComponent} container spacing={1}>
