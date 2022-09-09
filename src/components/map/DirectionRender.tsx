@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import { DirectionsRenderer } from "@react-google-maps/api";
+import { Colors } from "../../theme/colors";
 
 function DirectionRender(props: any) {
-
   const { places, travelMode } = props;
 
   const [state, setState] = useState<any>({
@@ -12,7 +12,6 @@ function DirectionRender(props: any) {
   });
 
   const initDirections = () => {
-
     const waypoints = places.map((p: any) => ({
       location: { lat: p.lat, lng: p.lng },
       stopover: true,
@@ -39,17 +38,25 @@ function DirectionRender(props: any) {
         } else {
           setState({ error: true });
         }
-
       }
     );
-
   };
+
+  const style = {
+    strokeColor: Colors.secondary.light,
+    strokeOpacity: 1.0,
+    strokeWeight: 10
+  }
 
   useEffect(() => {
     initDirections();
   }, [travelMode]);
 
-  return !state.error ? <DirectionsRenderer directions={state.directions} /> : <></>;
+  return !state.error ? (
+    <DirectionsRenderer options={{ suppressMarkers: true, polylineOptions: style }}  directions={state.directions} />
+  ) : (
+    <></>
+  );
 }
 
 export default DirectionRender;
