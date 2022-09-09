@@ -4,57 +4,16 @@ import DistanceService from "./components/distance/DistanceService";
 import { Divider, Card, CardContent, Typography } from "@mui/material";
 import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
-import { Colors } from "./theme/colors";
 import { useSelector } from "react-redux";
 import SearchModal from "./components/searchModal/SearchModal"
-
-type FlexDirection =
-  | "column"
-  | "inherit"
-  | "-moz-initial"
-  | "initial"
-  | "revert"
-  | "unset"
-  | "column-reverse"
-  | "row"
-  | "row-reverse"
-  | any;
-
-const aside: FlexDirection = {
-  display: "flex",
-  height: "100%",
-  width: "40%",
-  maxWidth: "400px",
-  padding: 12,
-  flexDirection: "column",
-};
-
-const main = {
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  overflow: "hidden",
-  background: Colors.default.dark,
-};
-
-const section = {
-  width: "100%",
-  height: "100%",
-  background: "green",
-};
-
-const paths = {
-  width: "100%",
-  height: "100%",
-  overflow: "auto",
-};
+import "./App.css";
 
 function App() {
   const sameCountry = useSelector((state: any) => state.distances.sameCountry);
   return (
-    <div style={main}>
+    <div className="app-main">
       <SearchModal />
-      <div style={aside}>
+      <div className="app-side-bar">
         <div style={{ width: "100%" }}>
           <Card style={{ marginBottom: 8, overflow: "inherit" }}>
             <CardContent>
@@ -80,7 +39,7 @@ function App() {
         )}
       </div>
 
-      <div style={section}>
+      <div className="app-map-container">
         <Map />
       </div>
     </div>

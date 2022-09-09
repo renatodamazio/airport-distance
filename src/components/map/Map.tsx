@@ -157,7 +157,7 @@ function Map() {
           bounds.extend(mkr.position);
         }
         map.fitBounds(bounds);
-      };
+      }
 
       setMap(map);
     },
@@ -169,6 +169,23 @@ function Map() {
   useEffect(() => {
     setMapKey((prev) => (prev += 1));
   }, [origin, destination, inverse]);
+
+  
+let mapOptions = {
+  scrollwheel: false,
+  zoomControlOptions: {
+      //   position: 'RIGHT_CENTER',    // as long as this is not set it works
+      style: 'SMALL'
+  },
+  mapTypeControlOptions: {
+      position: 'BOTTOM_RIGHT'     // this makes the map type control disappear
+  },
+  draggable: false,
+  rotateControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  panControl: false,
+};
 
   return isLoaded ? (
     <GoogleMap

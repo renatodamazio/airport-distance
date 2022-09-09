@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, batch, useSelector } from "react-redux";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -149,15 +149,16 @@ function Search() {
 
   useEffect(() => {
     var arr = [...searchFields];
-    arr.reverse();
+    let reverseArr = arr.reverse();
 
     if (inverse) {
-      let reverseArr = arr.reverse();
 
-      reverseArr[0].label = "Airport Destination";
-      reverseArr[1].label = "Airport Origin";
-    }
-    setSearchFields(arr);
+      // reverseArr[0].label = "Airport Origin";
+      // reverseArr[1].label = "Airport Destination";
+
+    };
+
+    setSearchFields(reverseArr);
 
     showResults();
   }, [inverse]);
