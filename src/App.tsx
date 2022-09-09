@@ -1,17 +1,9 @@
 import Map from "./components/map";
 import Search from "./components/seach/Search";
 import DistanceService from "./components/distance/DistanceService";
-import {
-  Box,
-  Grid,
-  Divider,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Divider, Card, CardContent, Typography } from "@mui/material";
 import Transport from "./components/distance/Transport";
 import Steps from "./components/steps/Steps";
-import { useSelector } from "react-redux";
 
 type FlexDirection =
   | "column"
@@ -30,6 +22,7 @@ const aside: FlexDirection = {
   height: "100%",
   width: "40%",
   maxWidth: "400px",
+  padding: 6,
   flexDirection: "column",
 };
 
@@ -58,26 +51,20 @@ function App() {
     <div style={main}>
       <div style={aside}>
         <div style={{ width: "100%" }}>
-          <Card>
+          <Card style={{ marginBottom: 8, overflow: "inherit" }}>
             <CardContent>
-              <div>
-                <Transport />
-              </div>
-              <div>
-                <Search />
-              </div>
+              <Transport />
+              <Search />
             </CardContent>
           </Card>
-          <div>
-            <Card style={{ borderRadius: 0 }}>
-              <CardContent>
-                <Divider>
-                  <Typography variant="h6">Distance</Typography>
-                </Divider>
-                <DistanceService />
-              </CardContent>
-            </Card>
-          </div>
+          <Card style={{ borderRadius: 0, marginBottom: 6 }}>
+            <CardContent>
+              <Divider>
+                <Typography variant="h6">Distance</Typography>
+              </Divider>
+              <DistanceService />
+            </CardContent>
+          </Card>
         </div>
         <div style={paths}>
           <Steps />

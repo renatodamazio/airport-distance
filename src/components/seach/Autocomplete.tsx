@@ -35,7 +35,7 @@ function AutocompleteField(props: any) {
   return (
     <Autocomplete
       disablePortal
-      size="small"
+      size="medium"
       filterOptions={filterOptions}
       options={airportsAvailable}
       onInput={(event: any) => filterAirports(event.target.value)}
