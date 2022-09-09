@@ -9,6 +9,9 @@ import { useSelector, useDispatch, batch } from "react-redux";
 
 import { calcKilometers, calcNauticalMiles } from "../../utils/distance";
 
+import markerOrigin from "../../icons/origin-map-marker.png";
+import markerDestination from "../../icons/destination-map-marker.png";
+
 import {
   setDistance,
   setNautical,
@@ -145,21 +148,24 @@ function Map() {
             map: map,
           });
 
+          if (i == 0) {
+            mkr.setIcon(markerOrigin);
+          } else {
+            mkr.setIcon(markerDestination);
+          }
           bounds.extend(mkr.position);
         }
         map.fitBounds(bounds);
-      } 
+      }
 
       setMap(map);
     },
     [origin, destination]
   );
 
-  const onUnmount = useCallback(function callback() {
-  }, []);
+  const onUnmount = useCallback(function callback() {}, []);
 
   useEffect(() => {
-
     setMakers(places);
     setMapKey((prev) => (prev += 1));
   }, [origin, destination]);
@@ -174,10 +180,19 @@ function Map() {
       onUnmount={onUnmount}
     >
       <>
-        {makers.map((marker: any, index: number) => {
+        {/* {makers.map((marker: any, index: number) => {
           const position = { lat: marker.lat, lng: marker.lng };
-          return <MarkerF position={position} key={index} />;
-        })}
+          return (
+            <MarkerF
+              icon={{
+                url: "https://img.icons8.com/fluency/344/where.png",
+                scaledSize: new google.maps.Size(50, 50)
+              }}
+              position={position}
+              key={index}
+            />
+          );
+        })} */}
 
         <PolylineDistance directions={places} />
 
