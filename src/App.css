@@ -23,19 +23,46 @@
   background: #efef;
 }
 
+.app-close-main-mobile {
+  position: absolute;
+  top: 31px;
+  left: 36px;
+}
+
 /*=============================================
 =            Mobile definitions            =
 =============================================*/
 @media only screen and (max-width: 600px) {
   .app-side-bar {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 9999;
     max-width: 100%;
     padding: 16px;
+  }
+
+  .app-side-bar.hidden-side-bar {
+    height: 0%;
+    overflow: hidden;
+  }
+
+  .app-show-side-bar {
+    position: fixed;
+    bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    width: 100%;
+    left: 0%;
+    display: flex;
+    transition: .500s ease-in-out;
+  }
+
+  .app-show-side-bar.hidden {
+    transform: translateY(150%);
   }
 }
 
