@@ -23,7 +23,7 @@ const aside: FlexDirection = {
   height: "100%",
   width: "40%",
   maxWidth: "400px",
-  padding: 6,
+  padding: 12,
   flexDirection: "column",
 };
 
@@ -32,7 +32,7 @@ const main = {
   height: "100%",
   display: "flex",
   overflow: "hidden",
-  background: Colors.default.dark
+  background: Colors.default.dark,
 };
 
 const section = {
@@ -45,7 +45,6 @@ const paths = {
   width: "100%",
   height: "100%",
   overflow: "auto",
-  padding: 30,
 };
 
 function App() {
@@ -59,7 +58,7 @@ function App() {
               <Search />
             </CardContent>
           </Card>
-          <Card style={{ borderRadius: 0, marginBottom: 6 }}>
+          <Card style={{ marginBottom: 8 }}>
             <CardContent>
               <Divider>
                 <Typography variant="h6">Distance</Typography>
@@ -68,9 +67,11 @@ function App() {
             </CardContent>
           </Card>
         </div>
-        <div style={paths}>
-          <Steps />
-        </div>
+        <Card style={{ overflow: "auto" }}>
+          <CardContent>
+            <Steps />
+          </CardContent>
+        </Card>
       </div>
 
       <div style={section}>
