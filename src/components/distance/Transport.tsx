@@ -5,7 +5,7 @@ import { IconButton, ButtonGroup, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setTransport } from "../../store/reducers/distances";
-import blue from "@material-ui/core/colors/blue";
+import { Colors } from "../../theme/colors";
 
 import {
   MdDirectionsCar,
@@ -17,6 +17,7 @@ import {
 interface transportReference {
   icon: string | any;
   code: string;
+  bgColor: any;
 }
 
 function Transport() {
@@ -28,19 +29,23 @@ function Transport() {
   const [transports, setTransports] = useState<transportReference[]>([
     {
       icon: <MdDirectionsCar />,
+      bgColor: Colors?.primary?.light,
       code: "DRIVING",
     },
     {
       icon: <MdOutlineDirectionsBike />,
       code: "BICYCLING",
+      bgColor: Colors?.success?.light,
     },
     {
       icon: <MdDirectionsBus />,
       code: "TRANSIT",
+      bgColor: Colors?.error?.light,
     },
     {
       icon: <MdDirectionsWalk />,
       code: "WALKING",
+      bgColor: Colors?.warning?.light,
     },
   ]);
 
@@ -66,7 +71,7 @@ function Transport() {
             <IconButton
               style={{
                 background:
-                  activeTransport === transport.code ? `${blue[100]}` : "",
+                  activeTransport === transport.code ? `${transport.bgColor}` : "",
               }}
               onClick={() => defineTravelTransport(transport)}
               key={key}
