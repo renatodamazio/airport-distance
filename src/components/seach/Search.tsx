@@ -154,8 +154,8 @@ function Search() {
     if (inverse) {
       let reverseArr = arr.reverse();
 
-      reverseArr[0].label = "Destination";
-      reverseArr[1].label = "Origin";
+      reverseArr[0].label = "Airport Destination";
+      reverseArr[1].label = "Airport Origin";
 
     }
     setSearchFields(arr);
@@ -166,7 +166,6 @@ function Search() {
   return (
     <Grid container spacing={1}>
       <ToastContainer />
-      {inverse ? "sim" : "não"}
       <Grid item xs={11}>
         <List className={inverse ? "reverse-column" : ""}>
           {searchFields.map((item: any, index: number) => {
