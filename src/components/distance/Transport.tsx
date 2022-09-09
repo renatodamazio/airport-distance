@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import { IconButton, ButtonGroup, Tooltip } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +24,7 @@ function Transport() {
     (state: any) => state.distances
   );
 
-  const [transports, setTransports] = useState<transportReference[]>([
+  const transports:transportReference[] = [
     {
       icon: <MdDirectionsCar color={Colors?.shadow.main}/>,
       bgColor: Colors?.primary?.light,
@@ -47,7 +45,7 @@ function Transport() {
       code: "WALKING",
       bgColor: Colors?.warning?.light,
     },
-  ]);
+  ];
 
   const styles = {
     display: "flex",
