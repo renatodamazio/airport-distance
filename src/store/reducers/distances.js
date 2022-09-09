@@ -5,6 +5,7 @@ export const distances = createSlice({
   initialState: {
     distance: "",
     duration: "",
+    inverse: false,
     steps: [],
     nautical: 0,
     kilometers: 0,
@@ -49,6 +50,9 @@ export const distances = createSlice({
 
     setSameCountry(state, action) {
       state.sameCountry = action.payload;
+    },
+    setInverse(state) {
+      state.inverse = !state.inverse;
     }
   },
 });
@@ -62,7 +66,8 @@ export const {
   setStartAddress,
   setEndAddress,
   setTransport,
-  setSameCountry
+  setSameCountry,
+  setInverse
 } = distances.actions;
 
 export default distances.reducer;

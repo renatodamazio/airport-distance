@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, batch } from "react-redux";
+import { useEffect, useState, useRef } from "react";
+import { useDispatch, batch, useSelector } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,30 +11,55 @@ import AutocompleteField from "./Autocomplete";
 import {
   Grid,
   List,
+  Link,
   ListItem,
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
-import { setEndAddress, setStartAddress, setSameCountry } from "../../store/reducers/distances";
+import {
+  setEndAddress,
+  setStartAddress,
+  setSameCountry,
+  setInverse,
+} from "../../store/reducers/distances";
 
 import { HiLocationMarker } from "react-icons/hi";
-import { MdTripOrigin} from "react-icons/md";
+import { MdTripOrigin } from "react-icons/md";
+import { TbSwitchVertical } from "react-icons/tb";
 
 interface optionsReferecenPoints {
   airportList?: any;
   name?: string;
   iataCode?: string;
-  country?:string;
+  country?: string;
 }
 
 interface destinationsReference {
   origin: object;
   destination: object;
-  country?:string;
+  country?: string;
+}
+
+interface searchFieldsReference {
+  label: string;
+  name: string;
 }
 
 function Search() {
   const dispatch = useDispatch();
+
+  const inverse = useSelector((state: any) => state.distances.inverse);
+
+  const [searchFields, setSearchFields] = useState<searchFieldsReference[]>([
+    {
+      label: "Airport Origin",
+      name: "origin",
+    },
+    {
+      label: "Airport Destination",
+      name: "destination",
+    },
+  ]);
 
   const [directions, setDirections] = useState<destinationsReference>({
     origin: {},
@@ -45,7 +70,7 @@ function Search() {
     airportList: [],
     name: "",
     iataCode: "",
-    country: ""
+    country: "",
   });
 
   const [destinationOptions, setDestinationOptions] =
@@ -53,7 +78,7 @@ function Search() {
       airportList: [],
       name: "",
       iataCode: "",
-      country: ""
+      country: "",
     });
 
   const getCoordenates = (data: any) => {
@@ -110,24 +135,68 @@ function Search() {
     if (!isDestinationValid) return;
 
     batch(() => {
-      dispatch(setSameCountry(destinationOptions.country === originOptions.country));
+      dispatch(
+        setSameCountry(destinationOptions.country === originOptions.country)
+      );
       dispatch(setOrigin(origin));
       dispatch(setDestination(destination));
     });
   };
 
   useEffect(() => {
-    showResults()
+    showResults();
   }, [directions]);
+
+  useEffect(() => {
+    var arr = [...searchFields];
+    arr.reverse()
+    
+    if (inverse) {
+      let reverseArr = arr.reverse();
+
+      reverseArr[0].label = "Destination";
+      reverseArr[1].label = "Origin";
+
+    }
+    setSearchFields(arr);
+
+    showResults();
+  }, [inverse]);
 
   return (
     <Grid container spacing={1}>
       <ToastContainer />
+      {inverse ? "sim" : "não"}
+      <Grid item xs={11}>
+        <List className={inverse ? "reverse-column" : ""}>
+          {searchFields.map((item: any, index: number) => {
+            return (
+              <ListItem key={index}>
+                <ListItemIcon>
+                  {index === 0 ? (
+                    <MdTripOrigin color={Colors?.primary.main} />
+                  ) : (
+                    <HiLocationMarker color={Colors?.secondary.main} />
+                  )}
+                </ListItemIcon>
 
-      <Grid item xs={12}>
-        <List>
+                <ListItemText>
+                  <AutocompleteField
+                    getLatLgnFromOptionList={getLatLgnFromOptionList}
+                    label={item.label}
+                    name={item.name}
+                  />
+                </ListItemText>
+              </ListItem>
+            );
+          })}
+        </List>
+
+        {/* <List>
           <ListItem>
-            <ListItemIcon><MdTripOrigin  color={Colors?.primary.main}/></ListItemIcon>
+            <ListItemIcon>
+              <MdTripOrigin color={Colors?.primary.main} />
+            </ListItemIcon>
 
             <ListItemText>
               <AutocompleteField
@@ -139,7 +208,9 @@ function Search() {
           </ListItem>
 
           <ListItem>
-            <ListItemIcon><HiLocationMarker  color={Colors?.secondary.main}/></ListItemIcon>
+            <ListItemIcon>
+              <HiLocationMarker color={Colors?.secondary.main} />
+            </ListItemIcon>
             <ListItemText>
               <AutocompleteField
                 getLatLgnFromOptionList={getLatLgnFromOptionList}
@@ -148,7 +219,18 @@ function Search() {
               />
             </ListItemText>
           </ListItem>
-        </List>
+        </List> */}
+      </Grid>
+
+      <Grid item xs={1}>
+        <Link
+          href="#!"
+          onClick={() => {
+            dispatch(setInverse());
+          }}
+        >
+          <TbSwitchVertical />
+        </Link>
       </Grid>
     </Grid>
   );

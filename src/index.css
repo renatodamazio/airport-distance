@@ -37,6 +37,12 @@ html, body, #root {
   min-width: 36px !important;
 }
 
-.gm-style img[usemap="#gmimap2"] {
+/* .gm-style img[usemap="#gmimap2"] {
   display: none !important;
+} */
+
+.reverse-column {
+  display: flex;
+  width: 100%;
+  flex-direction: column-reverse;
 }

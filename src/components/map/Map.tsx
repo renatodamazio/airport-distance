@@ -39,6 +39,7 @@ function Map() {
   const dispatch = useDispatch();
 
   const transport = useSelector((state: any) => state.distances.transport);
+  const inverse = useSelector((state: any) => state.distances.inverse);
 
   const { origin, destination } = useSelector(
     (state: any) => state.coordenates
@@ -148,26 +149,26 @@ function Map() {
             map: map,
           });
 
-          if (i == 0) {
-            mkr.setIcon(markerOrigin);
+          if (i === 0) {
+            mkr.setIcon(!inverse ? markerOrigin : markerDestination);
           } else {
-            mkr.setIcon(markerDestination);
+            mkr.setIcon(!inverse ? markerDestination : markerOrigin);
           }
           bounds.extend(mkr.position);
         }
         map.fitBounds(bounds);
-      }
+      };
 
       setMap(map);
     },
-    [origin, destination]
+    [origin, destination, inverse]
   );
 
   const onUnmount = useCallback(function callback() {}, []);
 
   useEffect(() => {
     setMapKey((prev) => (prev += 1));
-  }, [origin, destination]);
+  }, [origin, destination, inverse]);
 
   return isLoaded ? (
     <GoogleMap

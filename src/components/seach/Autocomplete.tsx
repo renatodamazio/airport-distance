@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import airports from "../../lib/airports.json";
 import Box from "@mui/material/Box";
 
-function AutocompleteField(props: any) {
+const AutocompleteField = forwardRef((props: any, ref: any) => {
   const [airportsAvailable, setAirportsAvailable] = useState<any>([]);
 
-  const { name, label, getLatLgnFromOptionList } = props;
+  const { name, label, getLatLgnFromOptionList, inputValue, placeholder } = props;
 
   const emitChange = (airport: any[]) => {
     if (!airport) return false;
@@ -23,7 +23,7 @@ function AutocompleteField(props: any) {
         item.name.toLowerCase().includes(query) ||
         item.iata_code.toLowerCase().includes(query)
     );
-    
+
     setAirportsAvailable(results);
     return results;
   };
@@ -47,8 +47,9 @@ function AutocompleteField(props: any) {
         </Box>
       )}
       renderInput={(params) => <TextField {...params} label={label} />}
+      ref={ref}
     />
   );
-}
+});
 
 export default AutocompleteField;
