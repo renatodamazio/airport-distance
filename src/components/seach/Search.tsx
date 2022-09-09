@@ -11,7 +11,8 @@ import AutocompleteField from "./Autocomplete";
 import {
   Grid,
   List,
-  Link,
+  Tooltip,
+  IconButton,
   ListItem,
   ListItemText,
   ListItemIcon,
@@ -149,14 +150,13 @@ function Search() {
 
   useEffect(() => {
     var arr = [...searchFields];
-    arr.reverse()
-    
+    arr.reverse();
+
     if (inverse) {
       let reverseArr = arr.reverse();
 
       reverseArr[0].label = "Airport Destination";
       reverseArr[1].label = "Airport Origin";
-
     }
     setSearchFields(arr);
 
@@ -190,46 +190,25 @@ function Search() {
             );
           })}
         </List>
-
-        {/* <List>
-          <ListItem>
-            <ListItemIcon>
-              <MdTripOrigin color={Colors?.primary.main} />
-            </ListItemIcon>
-
-            <ListItemText>
-              <AutocompleteField
-                getLatLgnFromOptionList={getLatLgnFromOptionList}
-                label="Origin"
-                name="origin"
-              />
-            </ListItemText>
-          </ListItem>
-
-          <ListItem>
-            <ListItemIcon>
-              <HiLocationMarker color={Colors?.secondary.main} />
-            </ListItemIcon>
-            <ListItemText>
-              <AutocompleteField
-                getLatLgnFromOptionList={getLatLgnFromOptionList}
-                label="Destination"
-                name="destination"
-              />
-            </ListItemText>
-          </ListItem>
-        </List> */}
       </Grid>
 
-      <Grid item xs={1}>
-        <Link
-          href="#!"
-          onClick={() => {
-            dispatch(setInverse());
-          }}
+      <Grid item xs={1} style={{ display: "flex", alignItems: "center", paddingLeft: 0 }}>
+        <Tooltip
+          title={"invert origin point and destination"}
+          placement="bottom-start"
         >
-          <TbSwitchVertical />
-        </Link>
+          <IconButton
+            size="small"
+            onClick={() => {
+              dispatch(setInverse());
+            }}
+          >
+            <TbSwitchVertical
+              size="20px"
+              color={inverse ? Colors.primary.main : Colors.shadow.main}
+            />
+          </IconButton>
+        </Tooltip>
       </Grid>
     </Grid>
   );
