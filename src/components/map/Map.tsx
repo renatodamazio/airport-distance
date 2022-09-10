@@ -50,7 +50,7 @@ function Map() {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCjkCjzb4MdOpgMh8DSBXg3hfhnzH6cGJo",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_APY_KEY || "",
     libraries: ["geometry", "drawing"],
   });
 

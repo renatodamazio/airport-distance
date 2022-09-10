@@ -26,6 +26,7 @@ function App() {
   return (
     <div className={`app-main`}>
       <SearchModal />
+
       
       <div className={`app-side-bar  ${toogleApp ? "hidden-side-bar" : ""}`}>
         <div style={{ width: "100%" }}>

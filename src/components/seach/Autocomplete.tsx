@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { createFilterOptions } from "@mui/material/Autocomplete";
@@ -19,7 +19,7 @@ interface airportReference {
 const AutocompleteField = (props: any) => {
   const [airportsAvailable, setAirportsAvailable] = useState<
     airportReference[]
-  >([{ name: "" }]);
+  >([]);
 
   const { name, label, getLatLgnFromOptionList, defaultValue, inputProps } =
     props;
