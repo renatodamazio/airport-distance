@@ -32,12 +32,14 @@ interface optionsReferecenPoints {
   name?: string;
   iataCode?: string;
   country?: string;
+  city?: string;
 }
 
 interface destinationsReference {
   origin: object;
   destination: object;
   country?: string;
+  city?: string;
 }
 
 interface searchFieldsReference {
@@ -76,6 +78,7 @@ function Search() {
     name: "",
     iataCode: "",
     country: "",
+    city: ""
   });
 
   const [destinationOptions, setDestinationOptions] =
@@ -84,6 +87,7 @@ function Search() {
       name: "",
       iataCode: "",
       country: "",
+      city: ""
     });
 
   const getcoordinates = (data: any) => {
@@ -107,6 +111,7 @@ function Search() {
         name: data.name,
         iataCode: data.iata_code,
         country: data.country,
+        city: data.city,
         airportList: [],
       });
     } else {
@@ -121,6 +126,7 @@ function Search() {
         name: data.name,
         iataCode: data.iata_code,
         country: data.country,
+        city: data.city,
         airportList: [],
       });
     }
